@@ -1,0 +1,134 @@
+/*
+THIS IS A LIST OF BUFFERS THAT CAN COME TO USE DURING WEBDEVELOPMENT
+THIS IS OPEN-SOURCE AND CAN BE ALTERED AS PLEASED.
+ALL PARTS OF THIS WILL BE STRUCTURED AS FOLLOWS
+
+@MARGIN
+@PADDING
+@......
+
+*/
+
+/*@MARGIN*/
+
+.buffer-all-25m{
+  margin: 25px !important
+}
+
+.buffer-all-50m {
+  margin: 50px !important;
+}
+
+.buffer-all-100m{
+  margin: 100px !important;
+}
+.buffer-top-25m{
+  margin-top: 25px !important;
+}
+
+.buffer-top-50m{
+  margin-top: 50px !important
+}
+
+.buffer-top-100m{
+  margin-top: 100px !important;
+}
+
+.buffer-bottom-25m{
+  margin-bottom: 25px !important;
+}
+
+.buffer-bottom-50m{
+  margin-bottom: 50px !important
+}
+
+.buffer-bottom-100m{
+  margin-bottom: 100px !important;
+}
+
+.nomargin{
+  margin: 0 !important;
+}
+
+.nomargin-lr{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.nomargin-l{
+  margin-left: 0 !important;
+}
+
+.nomargin-r{
+  margin-right: 0 !important;
+}
+
+.nomaring-t{
+  margin-top: 0 !important;
+}
+
+.nomargin-b {
+  margin-bottom: 0 !important;
+}
+
+/*@PADDING*/
+
+.buffer-all-25p{
+  padding: 25px !important
+}
+
+.buffer-all-50p {
+  padding: 50px !important;
+}
+
+.buffer-all-100p{
+  padding: 100px !important;
+}
+
+.buffer-top-25p{
+  padding-top: 25px !important;
+}
+
+.buffer-top-50p{
+  padding-top: 50px !important
+}
+
+.buffer-top-100p{
+  padding-top: 100px !important;
+}
+
+.buffer-bottom-25p{
+  padding-bottom: 25px !important;
+}
+
+.buffer-bottom-50p{
+  padding-bottom: 50px !important
+}
+
+.buffer-bottom-100p{
+  padding-bottom: 100px !important;
+}
+
+.nopadding{
+  padding: 0 !important;
+}
+
+.nopadding-lr{
+  padding-left: 0 !important;
+}
+
+.nopadding-l{
+  padding-left: 0 !important;
+}
+
+.nopadding-r{
+  padding-right: 0 !important;
+}
+
+.nopadding-t{
+  padding-top: 0 !important;
+}
+
+.nopadding-b{
+  padding-bottom: 0 !important;
+}

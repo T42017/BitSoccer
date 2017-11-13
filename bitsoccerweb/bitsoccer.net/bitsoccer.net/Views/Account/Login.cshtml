@@ -1,0 +1,21 @@
+﻿@using bitsoccer.net.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "This page requires a logged in user!";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>Login using any of these social media</p>
+<hr/>
+
+<div class="row">
+    <div class="col-md-12">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

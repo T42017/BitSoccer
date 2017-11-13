@@ -1,0 +1,229 @@
+/*
+	Theme Name: Knoester Theme
+	Theme URI: localhost
+	Author: CodeFlow Blekinge
+	Author Uri: Localhost
+	Description: Knoester-Co Theme
+	Version 0.1 Alpha
+	License: GNU General Puboic License v2 or later
+	License URI: http://www.gnu.org/licenses/gpl-2-0.html
+	Tags: Knoester, Knoester-Co
+*/
+
+/*******************************************************
+Buffers
+*******************************************************/
+
+.navbar-toggle {
+	background-color: #333 !important;
+}
+
+nav{
+	border-radius: 0 !important;
+	height: 150px !important;
+}
+
+body {
+	font-size: 24px;
+	font-weight: 300;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.navbar-inverse {
+	background-color: transparent !important;
+}
+
+.navbar {
+	border: none !important;
+}
+
+.navbartop {
+	font-size: 18px;
+	color: black !important;
+}
+
+.navbar-nav>li:hover {
+	border-bottom: 2px solid rgb(33,33,33);
+}
+
+/* make sidebar nav vertical */
+
+ul.nav {
+	margin-right: 1px !important;
+}
+
+.navbar-nav>li>a {
+	font-size: 18px !important;
+	color: #000 !important;
+}
+
+.navbar-header h1 {
+	font-family: 'planerregular', sans-serif !important;
+	font-weight: 400 !important;
+	font-size: 45px !important;
+    color: #000;
+}
+
+.navbar-collapse ul li {
+	margin-left: 25px;
+	text-align: center !important;
+}
+
+.navbar-toggle{
+	margin-top: 25px;
+}
+
+h1{
+	font-family: 'Dosis', sans-serif;
+}
+
+#canvas {
+    background:url(FieldNew.png)
+}
+
+.center-button{
+	text-align: center !important;
+
+}
+
+.start-button {
+	margin-left: 40% !important;
+    padding-top: 30px;
+	width: 250px;
+	height: 100px;
+    display: block;
+    color: white;
+    font-size: 36px;
+
+}
+
+body{
+	padding-top: 0 !important;
+	/*background-image: url(bg.png);*/
+}
+
+/* #####################################################################
+   #
+   #   Project       : Modal Login with jQuery Effects
+   #   Author        : Rodrigo Amarante (rodrigockamarante)
+   #   Version       : 1.0
+   #   Created       : 07/28/2015
+   #   Last Change   : 08/02/2015
+   #
+   ##################################################################### */
+   
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+#login-modal .modal-dialog {
+    width: 350px;
+}
+
+#login-modal input[type=text], input[type=password] {
+	margin-top: 10px;
+}
+
+#div-login-msg,
+#div-lost-msg,
+#div-register-msg {
+    border: 1px solid #dadfe1;
+    height: 30px;
+    line-height: 28px;
+    transition: all ease-in-out 500ms;
+}
+
+#div-login-msg.success,
+#div-lost-msg.success,
+#div-register-msg.success {
+    border: 1px solid #68c3a3;
+    background-color: #c8f7c5;
+}
+
+#div-login-msg.error,
+#div-lost-msg.error,
+#div-register-msg.error {
+    border: 1px solid #eb575b;
+    background-color: #ffcad1;
+}
+
+#icon-login-msg,
+#icon-lost-msg,
+#icon-register-msg {
+    width: 30px;
+    float: left;
+    line-height: 28px;
+    text-align: center;
+    background-color: #dadfe1;
+    margin-right: 5px;
+    transition: all ease-in-out 500ms;
+}
+
+#icon-login-msg.success,
+#icon-lost-msg.success,
+#icon-register-msg.success {
+    background-color: #68c3a3 !important;
+}
+
+#icon-login-msg.error,
+#icon-lost-msg.error,
+#icon-register-msg.error {
+    background-color: #eb575b !important;
+}
+
+#img_logo {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+/* #########################################
+   #    override the bootstrap configs     #
+   ######################################### */
+
+.modal-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .8;
+}
+
+.modal-content {
+    background-color: #ececec;
+    border: 1px solid #bdc3c7;
+    border-radius: 0px;
+    outline: 0;
+}
+
+.modal-header {
+    min-height: 16.43px;
+    padding: 15px 15px 15px 15px;
+    border-bottom: 0px;
+}
+
+.modal-body {
+    position: relative;
+    padding: 5px 15px 5px 15px;
+}
+
+.glyphicon {
+    top: 0px;
+}
+
+.form-control {
+  border-radius: 0px;
+}
+
+.white {
+    background-color: rgba(255,255,255, 0.6)
+}
+
+.loginpage {
+    color: #fff;
+}
+
+.poop {
+    background-color: black;
+    margin-top: 15%;
+    
+}
