@@ -7,45 +7,7 @@
 
 @Html.Partial("_Navigation")
 
-<div class="poop col-md-offset-2 col-md-8 buffer-all-100p">
-    <div class="container start-page">
-        <div class="col-md-12 center-button loginpage">
-            <h2>Bitsoccer, the AI coding game to show off your AI coding skills</h2>
-            <a class="start-button" id="loggedin" role="button" data-toggle="modal" data-target="#login-modal">Get Started</a>
-        </div>
-    </div>
-</div>
 
-@{
-    if (User.Identity.IsAuthenticated)
-    {
-        <script type="text/javascript">
-            var d = document.getElementById("loggedin");
-            d.className += " hidden";
-        </script>
-    }
-    else
-    {
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" align="center">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <!-- Begin # DIV Form -->
-                    <div id="div-forms">
-                        <!-- Begin # Login Form -->
-                        <div id="login-form">
-                            <h2>Sign in using one of these services!</h2>
-                            <section id="socialLoginForm">
-                                @Html.Partial("_ExternalLogin", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-}
+<div class="center">
+    <div class="game"></div>
+</div>

@@ -80,6 +80,14 @@ h1{
 
 #canvas {
     background:url(FieldNew.png)
+
+}
+
+.center {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .center-button{
@@ -113,7 +121,6 @@ body{
    #
    ##################################################################### */
    
-@import url(http://fonts.googleapis.com/css?family=Roboto);
 
 * {
     font-family: 'Roboto', sans-serif;
@@ -227,3 +234,4 @@ body{
     margin-top: 15%;
     
 }
+
