@@ -21,7 +21,7 @@ namespace bitsoccer.net.Controllers
         [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Title = "About";
+            ViewBag.Title = "ABOUT / FAQ ";
 
             return View();
         }
