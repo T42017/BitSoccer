@@ -29,7 +29,7 @@ namespace BitSoccerWeb.Controllers
             return View();
         }
 
-        public IActionResult Replays()
+        public IActionResult Replay()
         {
             ViewData["Message"] = "Replays.";
 
