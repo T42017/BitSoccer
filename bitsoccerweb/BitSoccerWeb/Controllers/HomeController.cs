@@ -21,6 +21,14 @@ namespace BitSoccerWeb.Controllers
 
             return View();
         }
+
+        public IActionResult Profile()
+        {
+            ViewData["Message"] = "Profile page.";
+
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
