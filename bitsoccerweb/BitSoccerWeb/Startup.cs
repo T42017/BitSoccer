@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BitSoccerWeb.Data;
 using BitSoccerWeb.Models;
 using BitSoccerWeb.Services;
+using Microsoft.AspNetCore.Authentication.Facebook;
 
 namespace BitSoccerWeb
 {
@@ -32,6 +33,12 @@ namespace BitSoccerWeb
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.ClientId = Configuration["Authentication:Facebook:ClientId"];
+                facebookOptions.ClientSecret = Configuration["Authentication:Facebook:ClientSecret"];
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
