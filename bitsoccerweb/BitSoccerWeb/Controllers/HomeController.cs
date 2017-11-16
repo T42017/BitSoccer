@@ -28,9 +28,9 @@ namespace BitSoccerWeb.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Profile()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Profile page.";
 
             return View();
         }
