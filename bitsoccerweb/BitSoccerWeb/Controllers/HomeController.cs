@@ -30,12 +30,23 @@ namespace BitSoccerWeb.Controllers
             return View();
         }
 
-        public IActionResult Teams()
+        public IActionResult Profile()
         {
-            var teams = new List<Team>();
-            teams.Add(new Team());
-            teams.Add(new Team());
-            ViewData["Teams"] = teams;
+            ViewData["Message"] = "Profile page.";
+
+            return View();
+        }
+
+        public IActionResult Replay()
+        {
+            ViewData["Message"] = "Replays.";
+
+            return View();
+        }
+
+        public IActionResult Simulate()
+        {
+            ViewData["Message"] = "Replays.";
 
             return View();
         }
