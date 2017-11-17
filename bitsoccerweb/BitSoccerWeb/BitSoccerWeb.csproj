@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-BitSoccerWeb-D8840BE2-D1E6-4398-9A71-8026DD85EFDD</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="References\**" />
+    <Content Remove="References\**" />
+    <EmbeddedResource Remove="References\**" />
+    <None Remove="References\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
@@ -19,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>References\dll\Common.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +42,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="References\" />
   </ItemGroup>
 
 </Project>

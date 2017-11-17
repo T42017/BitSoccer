@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Ball.cs" Link="Ball.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Constants.cs" Link="Constants.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Field.cs" Link="Field.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Global.cs" Link="Global.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\BallInfo.cs" Link="Internal\BallInfo.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\CodeException.cs" Link="Internal\CodeException.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\GameState.cs" Link="Internal\GameState.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\GameStateList.cs" Link="Internal\GameStateList.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\PlayerActionInfo.cs" Link="Internal\PlayerActionInfo.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\PlayerInfo.cs" Link="Internal\PlayerInfo.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\ReplayHelper.cs" Link="Internal\ReplayHelper.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\ScoreInfo.cs" Link="Internal\ScoreInfo.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Internal\TeamInfo.cs" Link="Internal\TeamInfo.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\IPosition.cs" Link="IPosition.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\ITeam.cs" Link="ITeam.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\MatchInfo.cs" Link="MatchInfo.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Player.cs" Link="Player.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\PlayerType.cs" Link="PlayerType.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Rectangle.cs" Link="Rectangle.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Team.cs" Link="Team.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\Common\Vector.cs" Link="Vector.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Internal\" />
+  </ItemGroup>
+
+</Project>

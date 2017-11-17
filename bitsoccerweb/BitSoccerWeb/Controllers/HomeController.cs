@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BitSoccerWeb.Models;
+using Common;
+
 
 namespace BitSoccerWeb.Controllers
 {
@@ -18,7 +20,7 @@ namespace BitSoccerWeb.Controllers
         [HttpPost]
         public IActionResult Index(string checkbox)
         {
-            return Content($"Fuck {checkbox}");
+            return Content($"Is it on? It is: {checkbox}");
         }
 
         public IActionResult About()
@@ -28,9 +30,12 @@ namespace BitSoccerWeb.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Teams()
         {
-            ViewData["Message"] = "Your contact page.";
+            var teams = new List<Team>();
+            teams.Add(new Team());
+            teams.Add(new Team());
+            ViewData["Teams"] = teams;
 
             return View();
         }
