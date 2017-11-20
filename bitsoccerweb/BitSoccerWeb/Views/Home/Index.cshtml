@@ -2,25 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="container container-top">
+    <div id="game-div" class="row">
+        @*<canvas id="canvas" class="col-md-8 col-md-offset-2" style="background-color: black;"></canvas>*@
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Home" asp-action="Index" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <h1 class="center">
+                    Team1
+                </h1>
+            </form>
+        </div>
+        <div class="col-md-4">
             <h1 class="center">
-                Team1
+                [0-0]
             </h1>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <h1 class="center">
-            [0-0]
-        </h1>
-    </div>
-    <div class="col-md-4">
-        <form asp-controller="Home" asp-action="Index" method="post">
-            <h1 class="center">
-                Team2
-            </h1>
-        </form>
+        </div>
+        <div class="col-md-4">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <h1 class="center">
+                    Team2
+                </h1>
+            </form>
+        </div>
     </div>
 </div>
