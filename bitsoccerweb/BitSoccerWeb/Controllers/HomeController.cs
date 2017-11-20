@@ -31,7 +31,7 @@ namespace BitSoccerWeb.Controllers
         }
 
         public IActionResult Profile()
-        {
+        { 
             ViewData["Message"] = "Profile page.";
 
             return View();
