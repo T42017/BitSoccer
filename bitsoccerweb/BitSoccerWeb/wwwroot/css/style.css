@@ -1,4 +1,9 @@
-﻿body {
+.center {
+    text-align: center;
+    color: #00FFFF;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -47,12 +52,12 @@
 }
 
 .footer p {
-    text-align:center;
+    text-align: center;
 }
 
 
 .footer li {
-    padding:5px;
+    padding: 5px;
 }
 
 .footer h3 {
@@ -61,5 +66,5 @@
 
 .center {
     text-align: center;
-    color: #00FFFF;
+    color: #00FF00;
 }
