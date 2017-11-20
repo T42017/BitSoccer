@@ -40,6 +40,12 @@ namespace BitSoccerWeb
                 facebookOptions.ClientSecret = Configuration["Authentication:Facebook:ClientSecret"];
             });
 
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
