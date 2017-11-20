@@ -31,6 +31,7 @@ namespace BitSoccerWeb.Controllers
         }
 
         public IActionResult Profile()
+        { 
             ViewData["Message"] = "Profile page.";
 
             return View();
@@ -46,6 +47,10 @@ namespace BitSoccerWeb.Controllers
         public IActionResult Simulate()
         {
             ViewData["Message"] = "Replays.";
+
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
