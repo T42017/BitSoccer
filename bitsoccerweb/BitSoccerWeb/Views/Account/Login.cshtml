@@ -31,10 +31,33 @@
                     <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                         <div>
                             <p>
-                                @foreach (var provider in loginProviders)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
-                                }
+                                <table>
+                                    @foreach (var provider in loginProviders)
+                                    {
+                                        string media = "fa fa-";
+                                        switch (provider.DisplayName)
+                                        {
+                                            case "Facebook":
+                                                media += "facebook";
+                                                break;
+                                            case "Google":
+                                                media += "google-plus";
+                                                break;
+                                            case "Microsoft":
+                                                media += "windows";
+                                                break;
+                                        }
+                                        <tr>
+                                            <td>
+                                                <i class="@media input-lg"></i>
+                                            </td>
+
+                                            <td>
+                                                <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
                             </p>
                         </div>
                     </form>
