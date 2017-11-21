@@ -17,12 +17,6 @@ namespace BitSoccerWeb.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Index(string checkbox)
-        {
-            return Content($"Is it on? It is: {checkbox}");
-        }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
