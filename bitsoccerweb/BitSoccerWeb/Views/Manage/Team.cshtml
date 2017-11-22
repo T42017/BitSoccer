@@ -1,12 +1,11 @@
 ﻿@using BitSoccerWeb.Models.ManageViewModels
 @using BitSoccerWeb.Views.Manage
 @using Microsoft.AspNetCore.Mvc.Rendering
-@model BitSoccerWeb.Models.ManageViewModels.IndexViewModel
 @{
     ViewData["Title"] = "Team";
     ViewData.AddActivePage(ManageNavPages.Team);
 }
-
+<script src="js/FileUpload.js"></script>
 <h4>@ViewData["Title"]</h4>
 
 <form method="post" enctype="multipart/form-data" asp-controller="Manage" asp-action="Team">

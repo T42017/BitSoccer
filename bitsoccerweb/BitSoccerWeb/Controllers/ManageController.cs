@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -15,9 +16,12 @@ using Microsoft.Extensions.Options;
 using BitSoccerWeb.Models;
 using BitSoccerWeb.Models.ManageViewModels;
 using BitSoccerWeb.Services;
+using BitSoccerWeb.Views.Manage;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BitSoccerWeb.Controllers
 {
+
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
@@ -27,6 +31,8 @@ namespace BitSoccerWeb.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private IHostingEnvironment _hostingEnvironment;
+
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -35,13 +41,15 @@ namespace BitSoccerWeb.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          IHostingEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [TempData]
@@ -131,11 +139,6 @@ namespace BitSoccerWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Team()
-        {
-            return View();
-        }
-
         [HttpPost("UploadFiles")]
         public async Task<IActionResult> Post(List<IFormFile> files)
         {
@@ -152,8 +155,38 @@ namespace BitSoccerWeb.Controllers
                     }
                 }
             }
-            return Ok(new { count = files.Count, size, filePath});
+            return View(new { count = files.Count, size, filePath});
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Team (List<IFormFile> files)
+        {
+
+            return Ok();
+        }
+
+        private string Getpath(string filename)
+        {
+
+            string path = "C:\\Git\\BitSoccer\\bitsoccerweb\\BitSoccerWeb\\Teams";
+            return path + filename;
+        }
+
+        private string EnsureFilename(string filename)
+        {
+            if (filename.Contains("\\"))
+            {
+                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+            }
+            return filename;
+        }
+
+        public async Task<IActionResult> Team()
+        {
+            return View();
+        }
+
+
 
         public async Task<IActionResult> History()
         {
@@ -199,3 +232,4 @@ namespace BitSoccerWeb.Controllers
         #endregion
     }
 }
+
