@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Threading;
 using System.Threading.Tasks;
 using BitSoccerWeb.Extensions;
 using Microsoft.AspNetCore.Authentication;
@@ -18,6 +20,8 @@ using BitSoccerWeb.Models.ManageViewModels;
 using BitSoccerWeb.Services;
 using BitSoccerWeb.Views.Manage;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BitSoccerWeb.Controllers
 {
@@ -139,54 +143,32 @@ namespace BitSoccerWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files)
+        [HttpPost("Manage")]
+        public async Task<IActionResult> UploadFile(IEnumerable<IFormFile> files)
         {
             long size = files.Sum(f => f.Length);
-            var filePath = Path.GetTempFileName();
 
             foreach (var formFile in files)
             {
+                if (!formFile.FileName.EndsWith(".dll"))
+                    continue;
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Teams", Guid.NewGuid() + ".dll");
                 if (formFile.Length > 0)
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);
                     }
                 }
             }
-            return View(new { count = files.Count, size, filePath});
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Team (List<IFormFile> files)
-        {
-
-            return Ok();
-        }
-
-        private string Getpath(string filename)
-        {
-
-            string path = "C:\\Git\\BitSoccer\\bitsoccerweb\\BitSoccerWeb\\Teams";
-            return path + filename;
-        }
-
-        private string EnsureFilename(string filename)
-        {
-            if (filename.Contains("\\"))
-            {
-                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
-            }
-            return filename;
+            return RedirectToAction("Team");
         }
 
         public async Task<IActionResult> Team()
         {
             return View();
         }
-
-
 
         public async Task<IActionResult> History()
         {
@@ -201,32 +183,6 @@ namespace BitSoccerWeb.Controllers
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
-        }
-
-        private string FormatKey(string unformattedKey)
-        {
-            var result = new StringBuilder();
-            int currentPosition = 0;
-            while (currentPosition + 4 < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
-                currentPosition += 4;
-            }
-            if (currentPosition < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition));
-            }
-
-            return result.ToString().ToLowerInvariant();
-        }
-
-        private string GenerateQrCodeUri(string email, string unformattedKey)
-        {
-            return string.Format(
-                AuthenicatorUriFormat,
-                _urlEncoder.Encode("BitSoccerWeb"),
-                _urlEncoder.Encode(email),
-                unformattedKey);
         }
 
         #endregion
