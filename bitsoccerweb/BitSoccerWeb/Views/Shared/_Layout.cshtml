@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BitSoccerWeb</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/style.css"/>
+        <link rel="stylesheet" href="/css/style.css"/>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -33,7 +34,7 @@
             <ul class="nav navbar-nav">
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Simulate">Simulate</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Simulate">Simulate</a></li>
             </ul>
             @await Html.PartialAsync("_LoginPartial")
         </div>
@@ -41,7 +42,7 @@
 </nav>
 <div class="container body-content">
     @RenderBody()
-    <hr/>
+    
         <footer>
             <ul class="social-icons social-icons-lg">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
