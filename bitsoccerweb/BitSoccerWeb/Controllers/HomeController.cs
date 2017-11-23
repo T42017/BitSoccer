@@ -30,23 +30,9 @@ namespace BitSoccerWeb.Controllers
             return View();
         }
 
-        public IActionResult Profile()
-        { 
-            ViewData["Message"] = "Profile page.";
-
-            return View();
-        }
-
-        public IActionResult Replay()
-        {
-            ViewData["Message"] = "Replays.";
-
-            return View();
-        }
-
         public IActionResult Simulate()
         {
-            ViewData["Message"] = "Replays.";
+            ViewData["Message"] = "Simulations";
 
             return View();
         }
