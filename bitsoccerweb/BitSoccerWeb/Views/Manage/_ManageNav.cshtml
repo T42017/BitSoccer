@@ -1,4 +1,7 @@
-﻿@using BitSoccerWeb.Views.Manage
+﻿@using System.Linq
+@using BitSoccerWeb.Models
+@using BitSoccerWeb.Views.Manage
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
@@ -6,11 +9,7 @@
 
 <ul class="nav nav-pills nav-stacked">
     <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Profile</a></li>
-    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
-    }
-    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="@ManageNavPages.TeamNavClass(ViewContext)"><a asp-action="Team">Your teams</a></li>
+    <li class="@ManageNavPages.HistoryNavClass(ViewContext)"><a asp-action="History">History</a></li>
 </ul>
 
