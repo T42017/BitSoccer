@@ -33,7 +33,8 @@
 
 .center {
     text-align: center;
-    color: #000000;
+    /*color: #000000;*/
+    color: #ff0000;
 }
 
 
@@ -41,6 +42,7 @@
 
 .TextInFooter {
     text-align:center;
+    color: red;
 }
 
 
@@ -95,9 +97,4 @@
     width: 100%;
     z-index: 10000;
     min-height: 50px;
-}
-
-.img-height {
-    height: 70%;
-    width: 70%;
 }
