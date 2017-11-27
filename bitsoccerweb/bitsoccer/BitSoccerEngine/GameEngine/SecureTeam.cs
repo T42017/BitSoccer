@@ -61,10 +61,10 @@ internal class SecureTeam : ISecureTeam
     private ITeam _iTeam;
     private Team _team;
     private Exception Exception;
-    
+
     [CompilerGenerated]
     private int e;
-    
+
     public SecureTeam(string fileName)
     {
         try
@@ -118,14 +118,14 @@ internal class SecureTeam : ISecureTeam
     private static void LoadAssembly(Assembly assembly)
     {
         string[] array = new string[]
-		{
-			"System.IO",
-			"System.Net",
-			"System.Reflection",
-			"System.Threading",
-			"System.Diagnostics",
-			"System.GC"
-		};
+        {
+            "System.IO",
+            "System.Net",
+            "System.Reflection",
+            "System.Threading",
+            "System.Diagnostics",
+            "System.GC"
+        };
         Type[] types = assembly.GetTypes();
         for (int i = 0; i < types.Length; i++)
         {

@@ -11,6 +11,8 @@ public class GameState
     private readonly string _devMessage2;
     private readonly string _errorMessage;
 
+    public BallInfo BallInfo { get; private set; }
+
     public GameState()
     {
         this._teams.Clear();
@@ -32,8 +34,6 @@ public class GameState
         this._devMessage2 = devMessage2;
         this._errorMessage = errorMessage;
     }
-
-    public BallInfo BallInfo { get; private set; }
 
     public List<TeamInfo> Teams()
     {

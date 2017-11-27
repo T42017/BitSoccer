@@ -8,7 +8,6 @@ using System;
 using System.IO;
 using System.Security;
 using System.Security.Permissions;
-using System.Security.Policy;
 
 namespace GameEngine
 {
@@ -73,19 +72,19 @@ namespace GameEngine
 
         private void SetPermissions()
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            AppDomainSetup info = new AppDomainSetup()
-            {
-                ApplicationName = "Name",
-                ApplicationBase = currentDirectory
-            };
-            PermissionSet grantSet = new PermissionSet(PermissionState.None);
-            grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.Execution));
-            grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.ControlThread));
-            grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.PathDiscovery, currentDirectory));
-            grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.Read, currentDirectory));
-            SecureGameEngine._appDomain = AppDomain.CreateDomain("Game Domain", (Evidence)null, info, grantSet);
-            SecureGameEngine._secureGameRunner = (SecureGameRunner)SecureGameEngine._appDomain.CreateInstanceAndUnwrap(typeof(SecureGameRunner).Assembly.FullName, typeof(SecureGameRunner).FullName);
+            //string currentDirectory = Directory.GetCurrentDirectory();
+            //AppDomainSetup info = new AppDomainSetup()
+            //{
+            //    ApplicationName = "Name",
+            //    ApplicationBase = currentDirectory
+            //};
+            //PermissionSet grantSet = new PermissionSet(PermissionState.None);
+            //grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.Execution));
+            //grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.ControlThread));
+            //grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.PathDiscovery, currentDirectory));
+            //grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.Read, currentDirectory));
+            //SecureGameEngine._appDomain = AppDomain.CreateDomain("Game Domain", (Evidence)null, info, grantSet);
+            //SecureGameEngine._secureGameRunner = (SecureGameRunner)SecureGameEngine._appDomain.CreateInstanceAndUnwrap(typeof(SecureGameRunner).Assembly.FullName, typeof(SecureGameRunner).FullName);
         }
     }
 }

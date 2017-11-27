@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace GameEngine
 {
@@ -16,8 +18,6 @@ namespace GameEngine
         private ScoreInfo _scoreInfo;
         private GameState _gameState;
         private GameStateList _gameStateList;
-        private ISecureTeam _team1;
-        private ISecureTeam _team2;
         private int j;
         private int k;
         private string _devMessage1;
@@ -25,151 +25,51 @@ namespace GameEngine
         private string _errorMessage;
         private bool _disposing;
 
+        private ITeam _teamOne, _teamTwo;
+
         public GameEngine(string team1Path, string team2Path)
         {
-            if (string.IsNullOrEmpty(team1Path))
-                throw new ArgumentNullException("team1Path", "Team 1 can not be null");
-            if (string.IsNullOrEmpty(team2Path))
-                throw new ArgumentNullException("team1Path", "Team 2 can not be null");
+            Assembly teamOneAssembly, teamTwoAssembly;
             try
             {
-                if (team1Path.EndsWith(".dll"))
-                {
-                    this._team1 = (ISecureTeam)new global::SecureTeam(team1Path);
-                }
-                else
-                {
-                    if (!team1Path.EndsWith(".jar") && !team1Path.EndsWith(".exe") && !team1Path.EndsWith(".py"))
-                        throw new ArgumentException("Team 1 has illegal file ending.");
-                    this._team1 = (ISecureTeam)new SecureTeamOther(team1Path);
-                }
+                teamOneAssembly = Assembly.LoadFile(team1Path);
+                teamTwoAssembly = Assembly.LoadFile(team2Path);
             }
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
-                throw new ArgumentException("Team 1 does not exist:" + team1Path);
+                throw new Exception("Could not find one of the teams.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new ArgumentException("Failed to load team 1: " + ex.Message);
+                throw new Exception("Sum went wrong");
             }
-            try
-            {
-                if (team2Path.EndsWith(".dll"))
-                {
-                    this._team2 = (ISecureTeam)new global::SecureTeam(team2Path);
-                }
-                else
-                {
-                    if (!team2Path.EndsWith(".jar") && !team2Path.EndsWith(".exe") && !team2Path.EndsWith(".py"))
-                        throw new ArgumentException("Team 2 has illegal file ending.");
-                    this._team2 = (ISecureTeam)new SecureTeamOther(team2Path);
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new ArgumentException("Team 2 does not exist;" + team2Path);
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException("Failed to load team 2: " + ex.Message);
-            }
-            this.InitData();
+
+            var teamOneInstance = (from type
+                                   in teamOneAssembly.GetExportedTypes()
+                                   where typeof(ITeam).IsAssignableFrom(type)
+                                   select type).Single();
+
+            var teamTwoInstance = (from type
+                                   in teamTwoAssembly.GetExportedTypes()
+                                   where typeof(ITeam).IsAssignableFrom(type)
+                                   select type).Single();
+
+            _teamOne = (ITeam) Activator.CreateInstance(teamOneInstance);
+            _teamTwo = (ITeam) Activator.CreateInstance(teamTwoInstance);
+            InitData();
         }
 
-        public GameEngine(byte[] team1Bytes, byte[] team2Bytes)
-        {
-            this._team1 = (ISecureTeam)new SecureTeam(team1Bytes);
-            this._team2 = (ISecureTeam)new SecureTeam(team2Bytes);
-            this.InitData();
-        }
-
-        public GameEngine(string team1Name, byte[] team1Bytes, string team2Name, byte[] team2Bytes)
-        {
-            this._team1 = (ISecureTeam)new SecureTeam(team1Name, team1Bytes);
-            this._team2 = (ISecureTeam)new SecureTeam(team2Name, team2Bytes);
-            this.InitData();
-        }
-
-        public GameEngine(ITeam team1, ITeam team2)
-        {
-            if (team1 == null)
-                throw new ArgumentNullException("team1", "Team can not be null");
-            if (team2 == null)
-                throw new ArgumentNullException("team2", "Team can not be null");
-            this._team1 = (ISecureTeam)new SecureTeam(team1);
-            this._team2 = (ISecureTeam)new SecureTeam(team2);
-            this.InitData();
-        }
-
-        public GameEngine(ISecureTeam team1, ISecureTeam team2)
-        {
-            if (team1 == null)
-                throw new ArgumentNullException("team1", "Team can not be null");
-            if (team2 == null)
-                throw new ArgumentNullException("team2", "Team can not be null");
-            this._team1 = team1;
-            this._team2 = team2;
-            this.InitData();
-        }
-
-        public GameEngine()
+        public GameEngine(byte[] homeBytes, byte[] awayBytes)
         {
         }
 
-        public void InitGameEngine(string team1Path, string team2Path)
+        public GameEngine(string homeName, byte[] homeBytes, string awayName, byte[] awayBytes)
         {
-            if (string.IsNullOrEmpty(team1Path))
-                throw new ArgumentNullException("team1Path", "Team 1 can not be null");
-            if (string.IsNullOrEmpty(team2Path))
-                throw new ArgumentNullException("team1Path", "Team 2 can not be null");
-            try
-            {
-                if (team1Path.EndsWith(".dll"))
-                {
-                    this._team1 = (ISecureTeam)new global::SecureTeam(team1Path);
-                }
-                else
-                {
-                    if (!team1Path.EndsWith(".jar") && !team1Path.EndsWith(".exe") && !team1Path.EndsWith(".py"))
-                        throw new ArgumentException("Team 1 has illegal file ending.");
-                    this._team1 = (ISecureTeam)new SecureTeamOther(team1Path);
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new ArgumentException("Team 1 does not exist:" + team1Path);
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException("Failed to load team 1: " + ex.Message);
-            }
-            try
-            {
-                if (team2Path.EndsWith(".dll"))
-                {
-                    this._team2 = (ISecureTeam)new global::SecureTeam(team2Path);
-                }
-                else
-                {
-                    if (!team2Path.EndsWith(".jar") && !team2Path.EndsWith(".exe") && !team2Path.EndsWith(".py"))
-                        throw new ArgumentException("Team 2 has illegal file ending.");
-                    this._team2 = (ISecureTeam)new SecureTeamOther(team2Path);
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new ArgumentException("Team 2 does not exist;" + team2Path);
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException("Failed to load team 2: " + ex.Message);
-            }
-            this.InitData();
         }
 
         private void InitData()
         {
-            this._gameStateList = new GameStateList(this._team1.TeamName, this._team2.TeamName);
+            this._gameStateList = new GameStateList("Team One", "Team Two");
             this._teamInfos.Add(new TeamInfo(0));
             this._teamInfos.Add(new TeamInfo(1));
             this._ballInfo = new BallInfo();
@@ -177,42 +77,7 @@ namespace GameEngine
             this._gameState = new GameState(this._teamInfos, this._ballInfo, this._scoreInfo, "", "", "Game Started");
         }
 
-        public static bool teamOK(string teamPath)
-        {
-            if (string.IsNullOrEmpty(teamPath))
-                return false;
-            try
-            {
-                if (teamPath.EndsWith(".dll"))
-                {
-                    global::SecureTeam a = new global::SecureTeam(teamPath);
-                }
-                else if (teamPath.EndsWith(".jar") || teamPath.EndsWith(".exe") || teamPath.EndsWith(".py"))
-                {
-                    SecureTeamOther secureTeamOther = new SecureTeamOther(teamPath);
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
-        public static bool teamOK(byte[] assemblyBytes)
-        {
-            if (assemblyBytes == null)
-                return false;
-            try
-            {
-                global::SecureTeam a = new global::SecureTeam(assemblyBytes);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         public GameState GetNext()
         {
@@ -249,14 +114,17 @@ namespace GameEngine
             {
                 try
                 {
-                    team1 = this._team1.getTeamActions(this._teamInfos[0].b(), this._teamInfos[1].CopyTeamInfo().GetTeam(), this._ballInfo.CopyBall(), matchInfo1);
+                    //team1 = this._team1.getTeamActions(this._teamInfos[0].b(), this._teamInfos[1].CopyTeamInfo().GetTeam(), this._ballInfo.CopyBall(), matchInfo1);
+                    _teamOne.Action(_teamInfos[0].b(), _teamInfos[1].CopyTeamInfo().GetTeam(), _ballInfo.CopyBall(), matchInfo1);
+                    team1 = _teamInfos[0].b();
                 }
                 catch (Exception ex)
                 {
                     ++this.j;
                     team1 = this._teamInfos[0].b();
                     team1.DevMessage = ex.Message;
-                    this._errorMessage = (this._errorMessage + (object)"\nRed team failed " + (string)(object)this.j + "/" + (string)(object)Constants.GameEngineMaxAllowedTimeouts).Trim();
+                    //this._errorMessage = (this._errorMessage + (object)"\nRed team failed " + (string)(object)this.j + "/" + (string)(object)Constants.GameEngineMaxAllowedTimeouts).Trim();
+                    _errorMessage = (_errorMessage + "\nRed team failed " + j + "/" + Constants.GameEngineMaxAllowedTimeouts).Trim();
                 }
             }
             else
@@ -267,14 +135,17 @@ namespace GameEngine
             {
                 try
                 {
-                    team2 = this._team2.getTeamActions(this._teamInfos[1].b(), this._teamInfos[0].CopyTeamInfo().GetTeam(), this._ballInfo.CopyBallInfo().CopyBall(), matchInfo2);
+                    //team2 = this._team2.getTeamActions(this._teamInfos[1].b(), this._teamInfos[0].CopyTeamInfo().GetTeam(), this._ballInfo.CopyBallInfo().CopyBall(), matchInfo2);
+                    _teamTwo.Action(_teamInfos[1].b(), _teamInfos[0].CopyTeamInfo().GetTeam(), _ballInfo.CopyBall(), matchInfo2);
+                    team2 = _teamInfos[1].b();
                 }
                 catch (Exception ex)
                 {
                     ++this.k;
                     team2 = this._teamInfos[1].b();
                     team2.DevMessage = ex.Message;
-                    this._errorMessage = (this._errorMessage + (object)"\nBlue team failed " + (string)(object)this.k + "/" + (string)(object)Constants.GameEngineMaxAllowedTimeouts).Trim();
+                    //this._errorMessage = (this._errorMessage + (object)"\nBlue team failed " + (string)(object)this.k + "/" + (string)(object)Constants.GameEngineMaxAllowedTimeouts).Trim();
+                    _errorMessage = (_errorMessage + "\nBlue team failed " + k + "/" + Constants.GameEngineMaxAllowedTimeouts).Trim();
                 }
             }
             else
@@ -347,7 +218,7 @@ namespace GameEngine
         {
             while (this._gameStateList.Count < Constants.GameEngineMatchLength)
                 this.GetNext();
-            this.CleanUpTeams();
+            //this.CleanUpTeams();
             return this._scoreInfo;
         }
 
@@ -355,15 +226,15 @@ namespace GameEngine
         {
             while (this._gameStateList.Count < Constants.GameEngineMatchLength)
                 this.GetNext();
-            this.CleanUpTeams();
+            //this.CleanUpTeams();
             return ReplayHelper.ToByteArray(this._gameStateList);
         }
 
-        public void CleanUpTeams()
-        {
-            this._team1.Dispose();
-            this._team2.Dispose();
-        }
+        //public void CleanUpTeams()
+        //{
+        //    this._team1.Dispose();
+        //    this._team2.Dispose();
+        //}
 
         public void Dispose()
         {
@@ -377,7 +248,7 @@ namespace GameEngine
             this._disposing = true;
             if (!disposing)
                 return;
-            this.CleanUpTeams();
+            //this.CleanUpTeams();
         }
 
         public GameState GetCurrent()
@@ -390,26 +261,28 @@ namespace GameEngine
 
         public string Team1Name()
         {
-            return this._team1.TeamName;
+            return "Team One";
+            //return this._teamOne.TeamName;
         }
 
         public string Team2Name()
         {
-            return this._team2.TeamName;
+            return "Team Two";
+            //return this._team2.TeamName;
         }
 
         public void setTimeout(bool shouldTimeout)
         {
-            if (shouldTimeout)
-            {
-                this._team1.TimeOut = Constants.GameEngineMaxThreadTime;
-                this._team2.TimeOut = Constants.GameEngineMaxThreadTime;
-            }
-            else
-            {
-                this._team1.TimeOut = 60000000;
-                this._team2.TimeOut = 60000000;
-            }
+            //    if (shouldTimeout)
+            //    {
+            //        this._team1.TimeOut = Constants.GameEngineMaxThreadTime;
+            //        this._team2.TimeOut = Constants.GameEngineMaxThreadTime;
+            //    }
+            //    else
+            //    {
+            //        this._team1.TimeOut = 60000000;
+            //        this._team2.TimeOut = 60000000;
+            //    }
         }
     }
 }

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BitSoccerWeb.Models;
 using BitSoccerWeb.Models.HomeViewModels;
+using BitSoccerWeb.Temp;
 using Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 
 namespace BitSoccerWeb.Controllers
@@ -36,6 +38,14 @@ namespace BitSoccerWeb.Controllers
         public IActionResult Simulate()
         {
             ViewData["Message"] = "Simulations";
+
+            MatchManager.PlayMatch(
+                @"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\ProTeam.dll",
+                @"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll",
+                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml"
+            );
+
+            //MatchManager.PlayMatch("~/Teams/ProTeam.dll", "~/Teams/TeamOskar.dll", "~/Matches/");
 
             return View();
         }

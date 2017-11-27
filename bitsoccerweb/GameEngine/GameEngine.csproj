@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\DefaultTeam.cs" Link="DefaultTeam.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\GameEngine.cs" Link="GameEngine.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\GameEngineHolder.cs" Link="GameEngineHolder.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\IGameEngine.cs" Link="IGameEngine.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\ISecureTeam.cs" Link="ISecureTeam.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\LocalSecureGameEngine.cs" Link="LocalSecureGameEngine.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\SecureGameEngine.cs" Link="SecureGameEngine.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\SecureGameRunner.cs" Link="SecureGameRunner.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\SecureTeam.cs" Link="SecureTeam.cs" />
+    <Compile Include="..\bitsoccer\BitSoccerEngine\GameEngine\SecureTeamOther.cs" Link="SecureTeamOther.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.10.0-beta7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+</Project>

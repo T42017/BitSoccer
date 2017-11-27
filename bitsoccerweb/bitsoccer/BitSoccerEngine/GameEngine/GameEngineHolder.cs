@@ -3,12 +3,14 @@ using System;
 
 internal class GameEngineHolder : MarshalByRefObject
 {
-    private GameEngine.GameEngine _gameEngine;
+    //private GameEngine.GameEngine _gameEngine;
+    private LocalSecureGameEngine _gameEngine;
     private bool _disposing;
 
     public void Init(string fileName1, string fileName2)
     {
-        this._gameEngine = new GameEngine.GameEngine(fileName1, fileName2);
+        //this._gameEngine = new GameEngine.GameEngine(fileName1, fileName2);
+        _gameEngine = new LocalSecureGameEngine(fileName1, fileName2);
     }
 
     public GameState GetNext()

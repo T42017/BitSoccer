@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security;
 using System.Security.Permissions;
-using System.Security.Policy;
 
 namespace GameEngine
 {
@@ -44,22 +43,24 @@ namespace GameEngine
 
         private void Init(string fileName1, string fileName2)
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            AppDomainSetup info = new AppDomainSetup()
-            {
-                ApplicationName = "Name",
-                ApplicationBase = currentDirectory
-            };
-            PermissionSet grantSet = new PermissionSet(PermissionState.None);
-            grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.Execution));
-            grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.ControlThread));
-            grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.PathDiscovery, Path.GetDirectoryName(fileName1)));
-            grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.Read, Path.GetDirectoryName(fileName1)));
-            grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.PathDiscovery, Path.GetDirectoryName(fileName2)));
-            grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.Read, Path.GetDirectoryName(fileName2)));
-            this._appDomain = AppDomain.CreateDomain("Game Domain", (Evidence)null, info, grantSet);
-            this._gameEngineHolder = (GameEngineHolder)this._appDomain.CreateInstanceAndUnwrap(typeof(GameEngineHolder).Assembly.FullName, typeof(GameEngineHolder).FullName);
+            //string currentDirectory = Directory.GetCurrentDirectory();
+            //AppDomainSetup info = new AppDomainSetup()
+            //{
+            //    ApplicationName = "Name",
+            //    ApplicationBase = currentDirectory
+            //};
+            //PermissionSet grantSet = new PermissionSet(PermissionState.None);
+            //grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.Execution));
+            //grantSet.AddPermission((IPermission)new SecurityPermission(SecurityPermissionFlag.ControlThread));
+            //grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.PathDiscovery, Path.GetDirectoryName(fileName1)));
+            //grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.Read, Path.GetDirectoryName(fileName1)));
+            //grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.PathDiscovery, Path.GetDirectoryName(fileName2)));
+            //grantSet.AddPermission((IPermission)new FileIOPermission(FileIOPermissionAccess.Read, Path.GetDirectoryName(fileName2)));
+            //this._appDomain = AppDomain.CreateDomain("Game Domain", (Evidence)null, info, grantSet);
+            //this._gameEngineHolder = (GameEngineHolder)this._appDomain.CreateInstanceAndUnwrap(typeof(GameEngineHolder).Assembly.FullName, typeof(GameEngineHolder).FullName);
+            _gameEngineHolder = new GameEngineHolder();
             this._gameEngineHolder.Init(fileName1, fileName2);
+
         }
 
         public void Dispose()
