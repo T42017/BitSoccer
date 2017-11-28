@@ -12,8 +12,14 @@
     <div class="row">
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
-                <label asp-for="TeamCode"></label>
-                <select asp-for="Id" asp-items="@(new SelectList(@ViewBag.listofitems,"Id","Name"))"></select>
+                <label asp-for="TeamCode">
+                    
+                </label>
+
+                <select asp-for="Teams" asp-items="@Model.Teams"> @* Skicka med lagen till dropdown-listan (select) *@
+                    
+                </select>
+                
                 <h1 class="center">
                     Team1
                 </h1>
