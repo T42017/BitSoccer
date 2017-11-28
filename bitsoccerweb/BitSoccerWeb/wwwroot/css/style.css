@@ -102,3 +102,8 @@
 .container-top {
     margin-top: 2vh;
 }
+
+canvas {
+    width: 100%;
+    height: auto;
+}

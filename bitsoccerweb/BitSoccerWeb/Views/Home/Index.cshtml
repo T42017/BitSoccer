@@ -3,7 +3,7 @@
 }
 
 <div class="container container-top">
-    <div id="game-div" class="row">
+    <div id="game-div" class="row game-div" style="padding: 0 auto">
         <!-- The p5-sketch that shows a match lives here. -->
     </div>
 
@@ -11,19 +11,23 @@
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
                 <h1 class="center">
-                    Team1
+                    <span id="teamOneName">
+                        Team1
+                    </span>
                 </h1>
             </form>
         </div>
         <div class="col-md-4">
             <h1 class="center">
-                [0-0]
+                [<span id="teamOneScore">0</span>-<span id="teamTwoScore">0</span>]
             </h1>
         </div>
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
                 <h1 class="center">
-                    Team2
+                    <span id="teamTwoName">
+                        Team2
+                    </span>
                 </h1>
             </form>
         </div>

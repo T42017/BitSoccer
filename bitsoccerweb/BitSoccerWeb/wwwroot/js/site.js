@@ -4,6 +4,7 @@ var sketch = function(p) {
     var canvas, xml;
     var currentGameState = 0;
     var fps = 1000 / 60;
+    var playbackBufferHeight = 5;
 
     var teamOne = {
         players: [],
@@ -20,8 +21,8 @@ var sketch = function(p) {
     // ----- p5 functions -------
     p.setup = function() {
         canvas = p.createCanvas(480, 270);
-        canvas.class("col-md-8 col-md-offset-2");
-        canvas.style("background-color", "#00FF00");
+        //canvas.class("col-md-8 col-md-offset-2");
+        //canvas.style("background-color", "#00FF00");
         canvas.style("border", "2px solid black");
         
         p.initializeGame();
@@ -38,8 +39,10 @@ var sketch = function(p) {
         ball.move();
 
         // update the scores
-        teamOne.score = xml.gameStates[currentGameState].getAttribute("Team1Scores");
-        teamTwo.score = xml.gameStates[currentGameState].getAttribute("Team2Scores");
+        if (currentGameState < xml.gameStates.length) {
+            teamOne.score = xml.gameStates[currentGameState].getAttribute("Team1Scores");
+            teamTwo.score = xml.gameStates[currentGameState].getAttribute("Team2Scores");
+        }
     };
 
     p.draw = function() {
@@ -49,8 +52,24 @@ var sketch = function(p) {
         teamOne.players.forEach(player => player.draw());
         teamTwo.players.forEach(player => player.draw());
         ball.draw();
-        p.drawScores();
+        document.getElementById("teamOneScore").innerHTML = teamOne.score;
+        document.getElementById("teamTwoScore").innerHTML = teamTwo.score;
+        p.drawPlaybackBuffer();
     };
+
+    p.mousePressed = function () {
+        if (p.mouseY < p.height - playbackBufferHeight) {
+            return;
+        }
+
+        var x = p.map(p.mouseX, 0, p.width, 0, xml.gameStates.length);
+        currentGameState = p.floor(x) - 1;
+    }
+
+    p.mouseDragged = function() {
+        p.mousePressed();
+    }
+
     // ---------------------------
 
 
@@ -58,9 +77,10 @@ var sketch = function(p) {
     // ----------- initialization functions -------------------
     p.initializeGame = function() {
         xml = p.getXML("/js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml");
-        console.log(xml);
         p.initializePlayers();
         p.initializeBall();
+        document.getElementById("teamOneName").innerHTML = xml.teamNames.getAttribute("Team1Name");
+        document.getElementById("teamTwoName").innerHTML = xml.teamNames.getAttribute("Team2Name");
     };
 
     // Fetches the match's XML and returns the gamestates as well as the name of the teams
@@ -118,14 +138,18 @@ var sketch = function(p) {
 
     Player.prototype.draw = function() {
         p.stroke(0);
-        var color = {
-            r: this.team === "one" ? 255 : 0,
+        var colour = {
+            r: (this.team === "one") * 255,
             g: 0,
-            b: this.team === "two" ? 255 : 0
+            b: (this.team === "two") * 255
         };
 
-        p.fill(color.r, color.g, color.b);
-        p.rect(this.pos.x - this.width / 2, this.pos.y - this.height / 2, this.width, this.height);
+        p.fill(colour.r, colour.g, colour.b);
+        p.rect(this.pos.x - this.width  / 2,
+               this.pos.y - this.height / 2,
+               this.width,
+               this.height
+        );
     }
 
     Ball.prototype.move = function() {
@@ -159,12 +183,10 @@ var sketch = function(p) {
         );
     }
 
-    p.drawScores = function() {
-        p.textSize(14);
-        p.fill(255);
-        p.noStroke();
-        p.text(teamOne.score, 25, p.height - 25);
-        p.text(teamTwo.score, p.width - 25, p.height - 25);
+    p.drawPlaybackBuffer = function() {
+        p.stroke(0, 150, 0);
+        p.fill(0, 150, 0);
+        p.rect(0, p.height - playbackBufferHeight, p.map(currentGameState, 0, xml.gameStates.length, 0, p.width), p.height);
     }
     // ----------------------------------------------
 };
