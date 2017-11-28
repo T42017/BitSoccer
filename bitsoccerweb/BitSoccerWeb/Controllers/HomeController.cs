@@ -19,18 +19,10 @@ namespace BitSoccerWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private DropDownViewModel _teams;
-
-        public HomeController(DropDownViewModel teams)
-        {
-            _teams = teams;
-        }
 
         public IActionResult Index()
         {
-            var li = _teams.Teams.AsReadOnly();
-            ViewBag.listofitems = li;
-            return View(DropDownViewModel);
+            return View();
         }
 
         public IActionResult About()
