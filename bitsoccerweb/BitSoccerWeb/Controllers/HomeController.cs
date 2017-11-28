@@ -19,10 +19,14 @@ namespace BitSoccerWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly DropDownViewModel _dropDownViewModel = new DropDownViewModel(); // Skapa en ny instans av DropDownViewModel (modell)
+        
+        public HomeController()
+            
 
         public IActionResult Index()
         {
-            return View();
+            return View(_dropDownViewModel); // Skicka med modellen till View:n för att få tillgång till dess saker (Teams, t.ex.)
         }
 
         public IActionResult About()
