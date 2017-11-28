@@ -14,7 +14,7 @@ var ball;
 function setup() {
     canvas = createCanvas(480, 270);
     canvas.class("col-md-8 col-md-offset-2");
-    canvas.style("background-color", "rgb(0, 255, 0)")
+    canvas.style("background-color", "#00FF00");
     canvas.style("border", "2px solid black");
     canvas.parent("game-div");
 
