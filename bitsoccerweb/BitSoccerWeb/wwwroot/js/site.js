@@ -1,29 +1,67 @@
-﻿// Write your JavaScript code.
-
+﻿// -------- members ------------------
 var canvas, xml;
-var index = 0;
-var ratio = 1920 / 1080;
-var ballTag = "BallPosition";
+var currentGameState = 0;
+var fps = 1000 / 120;
 
-var player;
-var ball;
 var teamOne = [];
 var teamTwo = [];
+var ball;
+// -----------------------------------
 
+
+
+// ----- p5 functions -------
 function setup() {
     canvas = createCanvas(480, 270);
     canvas.class("col-md-8 col-md-offset-2");
     canvas.style("background-color", "black");
     canvas.parent("game-div");
 
+    initializeGame();
+}
+
+function update() {
+    frameRate(fps);
+    teamOne.forEach(player => player.move());
+    teamTwo.forEach(player => player.move());
+    ball.move();
+}
+
+function draw() {
+    background(0);
+    update();
+
+    teamOne.forEach(player => player.draw());
+    teamTwo.forEach(player => player.draw());
+    ball.draw();
+}
+// ---------------------------
+
+
+
+// ----------- initialization functions -------------------
+function initializeGame() {
     xml = getXML();
-
-    player = new Player();
-
     initializePlayers();
     initializeBall();
 }
 
+// Fetches the matches' XML and returns the gamestates as well as the name of the teams
+function getXML() {
+    var request = new XMLHttpRequest();
+    request.open("GET", "/js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml", false);
+    request.send();
+    var xml = request.responseXML;
+    var gameStates = xml.getElementsByTagName("SerializableGameState");
+    var teamNames = xml.getElementsByTagName("Match")[0];
+
+    return {
+        gameStates: gameStates,
+        teamNames: teamNames
+    };
+}
+
+// Initializes both of the teams' with players
 function initializePlayers() {
     teamOne.push(new Player("Team1Player1", "one"));
     teamOne.push(new Player("Team1Player2", "one"));
@@ -43,49 +81,33 @@ function initializePlayers() {
 function initializeBall() {
     ball = new Ball();
 }
+// ------------------------------
 
-function getXML() {
-    var request = new XMLHttpRequest();
-    request.open("GET", "/js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml", false);
-    request.send();
-    var xml = request.responseXML;
-    var gameStates = xml.getElementsByTagName("SerializableGameState");
-    var teamNames = xml.getElementsByTagName("Match")[0];
 
-    return {
-        gameStates: gameStates,
-        teamNames: teamNames
-    };
-}
 
-function update() {
-    frameRate(1000 / 60);
-    teamOne.forEach(player => player.move());
-    teamTwo.forEach(player => player.move());
-    ball.move();
-}
-
-function draw() {
-    background(0);
-    update();
-
-    teamOne.forEach(player => player.draw());
-    teamTwo.forEach(player => player.draw());
-    ball.draw();
-}
-
+// ----------- constructor functions ---------------
+// Represents a player with a position, tag (what position to search for in the XML) and a team for drawing the correct colour.
 function Player(tag, team) {
     this.pos = createVector(0, 0);
     this.tag = tag;
     this.team = team;
 }
 
-Player.prototype.move = function () {
-    if (index >= xml.gameStates.length) {
+// Represents a ball with a position.
+function Ball() {
+    this.pos = createVector(0, 0);
+}
+// ----------------------------------------------------
+
+
+
+// ------------- prototype attachments ----------------------
+Player.prototype.move = function() {
+    if (currentGameState >= xml.gameStates.length) {
         return;
     }
 
-    var gameState = xml.gameStates[index++];
+    var gameState = xml.gameStates[currentGameState++];
     var playerPosXML = gameState.getElementsByTagName(this.tag);
     var pos = {
         x: parseInt(playerPosXML[0].getAttribute("X")),
@@ -109,16 +131,12 @@ Player.prototype.draw = function() {
     rect(this.pos.x, this.pos.y, 10, 10);
 }
 
-function Ball() {
-    this.pos = createVector(0, 0);
-}
-
-Ball.prototype.move = function () {
-    if (index >= xml.gameStates.length) {
+Ball.prototype.move = function() {
+    if (currentGameState >= xml.gameStates.length) {
         return;
     }
 
-    var gameState = xml.gameStates[index++];
+    var gameState = xml.gameStates[currentGameState++];
     var playerPosXML = gameState.getElementsByTagName("BallPosition");
     var pos = {
         x: parseInt(playerPosXML[0].getAttribute("X")),
@@ -135,3 +153,4 @@ Ball.prototype.draw = function() {
     fill(255);
     ellipse(this.pos.x, this.pos.y, 10, 10);
 }
+// --------------------------------------------------
