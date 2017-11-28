@@ -1,5 +1,5 @@
 ﻿// The p5 sketch.
-var sketch = function (p) {
+var sketch = function(p) {
     // -------- members ------------------
     var canvas, xml;
     var currentGameState = 0;
@@ -8,6 +8,8 @@ var sketch = function (p) {
     var teamOne = [];
     var teamTwo = [];
     var ball;
+
+    var currentScores;
     // -----------------------------------
 
 
@@ -26,6 +28,12 @@ var sketch = function (p) {
         teamOne.forEach(player => player.move());
         teamTwo.forEach(player => player.move());
         ball.move();
+
+        // update the scores
+        currentScores = {
+            team1: xml.gameStates[currentGameState].getAttribute("Team1Scores"),
+            team2: xml.gameStates[currentGameState].getAttribute("Team2Scores")
+        };
     };
 
     p.draw = function() {
@@ -35,6 +43,7 @@ var sketch = function (p) {
         teamOne.forEach(player => player.draw());
         teamTwo.forEach(player => player.draw());
         ball.draw();
+        p.drawScores();
     };
     // ---------------------------
 
@@ -43,6 +52,7 @@ var sketch = function (p) {
     // ----------- initialization functions -------------------
     p.initializeGame = function() {
         xml = p.getXML("/js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml");
+        console.log(xml);
         p.initializePlayers();
         p.initializeBall();
     };
@@ -52,13 +62,13 @@ var sketch = function (p) {
         var request = new XMLHttpRequest();
         request.open("GET", filePath, false);
         request.send();
-        var xml = request.responseXML;
-        var gameStates = xml.getElementsByTagName("SerializableGameState");
-        var teamNames = xml.getElementsByTagName("Match")[0];
+        var response = request.responseXML;
+        var gameStates = response.getElementsByTagName("SerializableGameState");
+        var teamNames = response.getElementsByTagName("Match")[0];
 
         return {
             gameStates: gameStates,
-            teamNames: teamNames
+            teamNames: teamNames,
         };
     };
 
@@ -86,6 +96,8 @@ var sketch = function (p) {
         this.pos = p.createVector(0, 0);
         this.tag = tag;
         this.team = team;
+        this.width = 10;
+        this.height = 10;
     }
 
     // Represents a ball with a position.
@@ -97,12 +109,12 @@ var sketch = function (p) {
 
 
     // ------------- prototype attachments ----------------------
-    Player.prototype.move = function () {
+    Player.prototype.move = function() {
         p.move(this, this.tag);
     }
 
-    Player.prototype.draw = function () {
-        p.noStroke();
+    Player.prototype.draw = function() {
+        p.stroke(0);
         var color = {
             r: this.team === "one" ? 255 : 0,
             g: 0,
@@ -110,14 +122,14 @@ var sketch = function (p) {
         };
 
         p.fill(color.r, color.g, color.b);
-        p.rect(this.pos.x, this.pos.y, 10, 10);
+        p.rect(this.pos.x - this.width / 2, this.pos.y - this.height / 2, this.width, this.height);
     }
 
-    Ball.prototype.move = function () {
+    Ball.prototype.move = function() {
         p.move(this, "BallPosition");
     }
 
-    Ball.prototype.draw = function () {
+    Ball.prototype.draw = function() {
         p.stroke(0);
         p.fill(255);
         p.ellipse(this.pos.x, this.pos.y, 10, 10);
@@ -128,7 +140,7 @@ var sketch = function (p) {
 
     // ------------- helper functions ---------------
     p.move = function(obj, tag) {
-        if (currentGameState >= xml.gameStates.length) {
+        if (currentGameState >= xml.gameStates.length || !obj || !obj.pos) {
             return;
         }
 
@@ -142,6 +154,14 @@ var sketch = function (p) {
             p.map(pos.x, 0, 1920, 0, p.width),
             p.map(pos.y, 0, 1080, 0, p.height)
         );
+    }
+
+    p.drawScores = function() {
+        p.textSize(14);
+        p.fill(255);
+        p.noStroke();
+        p.text(currentScores.team1, 25, p.height - 25);
+        p.text(currentScores.team2, p.width - 25, p.height - 25);
     }
     // ----------------------------------------------
 };
