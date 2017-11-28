@@ -12,7 +12,7 @@ function setup() {
     request.open("GET", "/Matches/0fa6110b-28c0-4519-8297-66c9cdf4133f.xml", true);
     request.send();
     var xml = request.responseXML;
-    var gameStates = xml.getElementsByTagName("Match");
+    var gameStates = xml.getElementsByTagName("SerializableGameState");
     for (var i = 0; i < gameStates.length; i++) {
         var gameState = gameStates[i];
         var serializableGameStates = xml.getElementsByTagName("GameStates");

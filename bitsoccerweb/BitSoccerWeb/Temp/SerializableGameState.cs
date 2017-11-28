@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace BitSoccerWeb.Temp
@@ -10,101 +11,60 @@ namespace BitSoccerWeb.Temp
     {
         public SerializableVector BallPosition { get; set; }
 
-        //[XmlElement("Team1Positions")]
-        //public Dictionary<string, SerializableVector> Team1Positions { get; set; } = new Dictionary<string, SerializableVector>()
-        //{     
-        //    { "Player1", null },
-        //    { "Player2", null },
-        //    { "Player3", null },
-        //    { "Player4", null },
-        //    { "Player5", null },
-        //    { "Player6", null }
-        //};
+        [XmlElement("Team1Player1")]
+        public SerializableVector Team1Player1 { get; set; }
+        [XmlElement("Team1Player2")]
+        public SerializableVector Team1Player2 { get; set; }
+        [XmlElement("Team1Player3")]
+        public SerializableVector Team1Player3 { get; set; }
+        [XmlElement("Team1Player4")]
+        public SerializableVector Team1Player4 { get; set; }
+        [XmlElement("Team1Player5")]
+        public SerializableVector Team1Player5 { get; set; }
+        [XmlElement("Team1Player6")]
+        public SerializableVector Team1Player6 { get; set; }
 
-        [XmlElement("Team1Positions")]
-        public List<SerializableVector> Team1Positions { get; set; } = new List<SerializableVector>() { null, null, null, null, null, null };
-
-        //[XmlElement("Team2Positions")]
-        //public Dictionary<string, SerializableVector> Team2Positions { get; set; } = new Dictionary<string, SerializableVector>()
-        //{
-        //    { "Player1", null },
-        //    { "Player2", null },
-        //    { "Player3", null },
-        //    { "Player4", null },
-        //    { "Player5", null },
-        //    { "Player6", null }
-        //};
-
-        [XmlElement("Team2Positions")]
-        public List<SerializableVector> Team2Positions { get; set; } = new List<SerializableVector>() { null, null, null, null, null, null };
-
-        //[XmlAttribute]
-        //public Dictionary<string, int> TeamScores { get; set; } = new Dictionary<string, int>()
-        //{
-        //    { "Team1", 0 },
-        //    { "Team2", 0 }
-        //};
+        [XmlElement("Team2Player1")]
+        public SerializableVector Team2Player1 { get; set; }
+        [XmlElement("Team2Player2")]
+        public SerializableVector Team2Player2 { get; set; }
+        [XmlElement("Team2Player3")]
+        public SerializableVector Team2Player3 { get; set; }
+        [XmlElement("Team2Player4")]
+        public SerializableVector Team2Player4 { get; set; }
+        [XmlElement("Team2Player5")]
+        public SerializableVector Team2Player5 { get; set; }
+        [XmlElement("Team2Player6")]
+        public SerializableVector Team2Player6 { get; set; }
 
         [XmlAttribute]
-        public List<int> TeamScores { get; set; } = new List<int>() { 0, 0 };
+        public int Team1Scores { get; set; }
+
+        [XmlAttribute]
+        public int Team2Scores { get; set; }
 
         public static SerializableGameState FromGameState(GameState gameState)
         {
             return new SerializableGameState
             {
-                //TeamScores =
-                //{
-                //    ["Team1"] = gameState.GetScoreInfo().Team1,
-                //    ["Team2"] = gameState.GetScoreInfo().Team2
-                //},
-
-                TeamScores = new List<int>()
-                {
-                    gameState.GetScoreInfo().Team1,
-                    gameState.GetScoreInfo().Team2
-                },
+                Team1Scores = gameState.GetScoreInfo().Team1,
+                Team2Scores = gameState.GetScoreInfo().Team2,
 
                 BallPosition = SerializableVector.FromVector(gameState.BallInfo.Position),
-
-                //Team1Positions =
-                //{
-                //    ["Player1"] = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[0].GetPosition()),
-                //    ["Player2"] = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[1].GetPosition()),
-                //    ["Player3"] = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[2].GetPosition()),
-                //    ["Player4"] = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[3].GetPosition()),
-                //    ["Player5"] = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[4].GetPosition()),
-                //    ["Player6"] = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[5].GetPosition()),
-                //},
-
-                Team1Positions = new List<SerializableVector>()
-                {
-                    SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[0].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[1].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[2].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[3].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[4].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[5].GetPosition()),
-                },
-
-                //Team2Positions =
-                //{
-                //    ["Player1"] = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[0].GetPosition()),
-                //    ["Player2"] = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[1].GetPosition()),
-                //    ["Player3"] = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[2].GetPosition()),
-                //    ["Player4"] = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[3].GetPosition()),
-                //    ["Player5"] = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[4].GetPosition()),
-                //    ["Player6"] = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[5].GetPosition()),
-                //},
-
-                Team2Positions = new List<SerializableVector>()
-                {
-                    SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[0].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[1].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[2].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[3].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[4].GetPosition()),
-                    SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[5].GetPosition()),
-                },
+                
+                Team1Player1 = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[0].GetPosition()),
+                Team1Player2 = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[1].GetPosition()),
+                Team1Player3 = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[2].GetPosition()),
+                Team1Player4 = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[3].GetPosition()),
+                Team1Player5 = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[4].GetPosition()),
+                Team1Player6 = SerializableVector.FromVector(gameState.Teams()[0].GetPlayers()[5].GetPosition()),
+                
+                Team2Player1 = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[0].GetPosition()),
+                Team2Player2 = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[1].GetPosition()),
+                Team2Player3 = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[2].GetPosition()),
+                Team2Player4 = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[3].GetPosition()),
+                Team2Player5 = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[4].GetPosition()),
+                Team2Player6 = SerializableVector.FromVector(gameState.Teams()[1].GetPlayers()[5].GetPosition()),
             };
         }
     }
