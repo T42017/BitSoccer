@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -39,14 +40,23 @@ namespace BitSoccerWeb.Controllers
         {
             ViewData["Message"] = "Simulations";
 
-            MatchManager.PlayMatch(
-                @"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\TeamOne.dll",
-                @"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\TeamLomma.dll",
-                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml",
-                1
-            );
+            //var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            //var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOne.dll";
+            //var teamOne = Path.Combine(projectFolder + teamOnePath);
 
-            //MatchManager.PlayMatch("~/Teams/ProTeam.dll", "~/Teams/TeamOskar.dll", "~/Matches/");
+            //var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamLomma.dll";
+            //var teamTwo = Path.Combine(projectFolder + teamTwoPath);
+
+            //var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml";
+            //var matches = Path.Combine(projectFolder + matchPath);
+            //// C:\GIT\BitSoccerWeb\bitsoccerweb\BitSoccerWeb\Matches
+            //MatchManager.PlayMatch(
+            //        teamOne,
+            //        teamTwo,
+            //        matches,
+            //        1
+            //    );
+
 
             return View();
         }
