@@ -5,11 +5,15 @@ var sketch = function(p) {
     var currentGameState = 0;
     var fps = 1000 / 60;
 
-    var teamOne = [];
-    var teamTwo = [];
+    var teamOne = {
+        players: [],
+        score: 0
+    };
+    var teamTwo = {
+        players: [],
+        score: 0
+    };
     var ball;
-
-    var currentScores;
     // -----------------------------------
 
 
@@ -25,23 +29,25 @@ var sketch = function(p) {
 
     p.update = function() {
         p.frameRate(fps);
-        teamOne.forEach(player => player.move());
-        teamTwo.forEach(player => player.move());
+
+        // move each team's players
+        teamOne.players.forEach(player => player.move());
+        teamTwo.players.forEach(player => player.move());
+
+        // move the ball
         ball.move();
 
         // update the scores
-        currentScores = {
-            team1: xml.gameStates[currentGameState].getAttribute("Team1Scores"),
-            team2: xml.gameStates[currentGameState].getAttribute("Team2Scores")
-        };
+        teamOne.score = xml.gameStates[currentGameState].getAttribute("Team1Scores");
+        teamTwo.score = xml.gameStates[currentGameState].getAttribute("Team2Scores");
     };
 
     p.draw = function() {
         p.background(0, 255, 0);
         p.update();
 
-        teamOne.forEach(player => player.draw());
-        teamTwo.forEach(player => player.draw());
+        teamOne.players.forEach(player => player.draw());
+        teamTwo.players.forEach(player => player.draw());
         ball.draw();
         p.drawScores();
     };
@@ -57,7 +63,7 @@ var sketch = function(p) {
         p.initializeBall();
     };
 
-    // Fetches the matches' XML and returns the gamestates as well as the name of the teams
+    // Fetches the match's XML and returns the gamestates as well as the name of the teams
     p.getXML = function(filePath) {
         var request = new XMLHttpRequest();
         request.open("GET", filePath, false);
@@ -75,11 +81,8 @@ var sketch = function(p) {
     // Initializes both of the teams' with players
     p.initializePlayers = function() {
         for (var i = 1; i <= 6; i++) {
-            teamOne.push(new Player("Team1Player" + i, "one"));
-        }
-
-        for (var i = 1; i <= 6; i++) {
-            teamTwo.push(new Player("Team2Player" + i, "two"));
+            teamOne.players.push(new Player("Team1Player" + i, "one"));
+            teamTwo.players.push(new Player("Team2Player" + i, "two"));
         }
     };
 
@@ -160,8 +163,8 @@ var sketch = function(p) {
         p.textSize(14);
         p.fill(255);
         p.noStroke();
-        p.text(currentScores.team1, 25, p.height - 25);
-        p.text(currentScores.team2, p.width - 25, p.height - 25);
+        p.text(teamOne.score, 25, p.height - 25);
+        p.text(teamTwo.score, p.width - 25, p.height - 25);
     }
     // ----------------------------------------------
 };
