@@ -12,20 +12,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using BitSoccerWeb.Data;
 
 
 namespace BitSoccerWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private DropDownViewModel _teams;
+
+        public HomeController(DropDownViewModel teams)
+        {
+            _teams = teams;
+        }
+
         public IActionResult Index()
         {
-            //var teams = _customersContext.Teams.OrderBy(t => t.TeamName).Select(x => new { Id = x.Code, Value = x.Name });
-
-            //var model = new DropDownViewModel();
-            //model.TeamList = new SelectList(teams, "Id", "Value");
-
-            return View(/*model*/);
+            var li = _teams.Teams.AsReadOnly();
+            ViewBag.listofitems = li;
+            return View(DropDownViewModel);
         }
 
         public IActionResult About()
@@ -45,8 +50,6 @@ namespace BitSoccerWeb.Controllers
                 $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml",
                 1
             );
-
-            //MatchManager.PlayMatch("~/Teams/ProTeam.dll", "~/Teams/TeamOskar.dll", "~/Matches/");
 
             return View();
         }
