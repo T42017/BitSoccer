@@ -12,11 +12,7 @@
     <div class="row">
         <div class="col-md-3 col-md-offset-1">
             <form asp-controller="Home" asp-action="Index" method="post">
-                <label asp-for="TeamCode">
-                    
-                </label>
-
-                <select asp-for="Teams" asp-items="@Model.Teams"> @* Skicka med lagen till dropdown-listan (select) *@
+                <select asp-for="Teams" asp-items="@Model.Teams" class="h1"> 
                     
                 </select>
                 
