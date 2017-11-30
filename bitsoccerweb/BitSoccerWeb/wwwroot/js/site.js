@@ -5,6 +5,7 @@ var sketch = function(p) {
     let currentGameState = 0;
     const fps = 1000 / 60;
     const playbackBufferHeight = 5;
+    let backgroundImage;
     
     const teamOne = {
         players: [],
@@ -15,12 +16,14 @@ var sketch = function(p) {
         score: 0
     };
     let ball;
+
     // -----------------------------------
 
 
     // ----- p5 functions -------
     p.setup = function() {
-        canvas = p.createCanvas(480, 270);
+        canvas = p.createCanvas(960, 540);
+        backgroundImage = p.loadImage("js/SoccerFieldPs.png");
         //canvas.class("col-md-8 col-md-offset-2");
         //canvas.style("background-color", "#00FF00");
         //canvas.style("border", "2px solid black");
@@ -46,7 +49,8 @@ var sketch = function(p) {
     };
 
     p.draw = () => {
-        p.background(0, 255, 0);
+        backgroundImage.resize(960, 0);
+        p.image(backgroundImage, 0, 0);
         p.update();
 
         teamOne.players.forEach(player => player.draw());
@@ -231,8 +235,8 @@ var sketch = function(p) {
     };
 
     p.drawPlaybackBuffer = function() {
-        p.stroke(0, 150, 0);
-        p.fill(0, 150, 0);
+        p.stroke(0, 0, 0);
+        p.fill(0, 0, 0);
         p.rect(0,
             p.height - playbackBufferHeight,
             p.map(currentGameState, 0, xml.gameStates.length, 0, p.width),
