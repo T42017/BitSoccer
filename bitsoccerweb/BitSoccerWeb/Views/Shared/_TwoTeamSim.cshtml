@@ -1,5 +1,7 @@
-﻿<section>
-        <form class="form-horizontal">
+﻿@using System.Runtime.InteropServices.ComTypes
+@using BitSoccerWeb.Temp
+<section>
+        <div class="form-horizontal">
             <fieldset>
                 <!-- Form Name -->
                 <legend>Two Teams</legend>
@@ -37,11 +39,13 @@
                         </div>
 
                         <!-- Button -->
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-4">
-                                <button id="submitSim" name="submitSim" class="btn btn-primary">Submit</button>
+                        <form asp-controller="Home" asp-action="TwoTeamSim" method="post">
+                            <div class="form-group">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <button id="submitSim" name="submitSim" class="btn btn-primary">Submit</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <!--Result dropdowns-->
                     <div class="col-md-6 sim">
@@ -51,7 +55,7 @@
                                     <div class="panel-heading" >
                                         <h4 class="panel-title matchinfo" >
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" >
-                                               TeamOskar 1 - 0 TeamOne
+                                                
                                             </a>
                                         </h4>
                                     </div>
@@ -60,67 +64,11 @@
                                             Seed: 8e48b7d2-2c2c-4d9d-8650-ba4cad04949f
                                         </div>
                                     </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title matchinfo">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                                TeamOskar 1 - 1 TeamOne
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse2" class="panel-collapse collapse">
-                                        <div class="panel-body center">
-                                            Seed: 8e48b7d2-2c2c-4d9d-8650-ba4cad04949f
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title matchinfo">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                                TeamOskar 3 - 0 TeamOne
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse3" class="panel-collapse collapse">
-                                        <div class="panel-body center">
-                                            Seed: 8e48b7d2-2c2c-4d9 d-8650-ba4cad04949f
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title matchinfo">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                                TeamOskar 5 - 2 TeamOne
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse4" class="panel-collapse collapse">
-                                        <div class="panel-body center">
-                                            Seed: 8e48b7d2-2c2c-4d9d-8650-ba4cad04949f
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title matchinfo">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                                                TeamOskar 4 - 4 TeamOne
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse5" class="panel-collapse collapse">
-                                        <div class="panel-body center">
-                                            Seed: 8e48b7d2-2c2c-4d9d-8650-ba4cad04949f
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                        
                             </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
-        </form>
+        </div>
     </section>
