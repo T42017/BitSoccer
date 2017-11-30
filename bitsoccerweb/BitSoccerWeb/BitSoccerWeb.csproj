@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\171130083835-TeamMeh-TeamScania.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
   </ItemGroup>

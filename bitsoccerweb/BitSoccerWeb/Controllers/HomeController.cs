@@ -39,11 +39,14 @@ namespace BitSoccerWeb.Controllers
         {
             ViewData["Message"] = "Simulations";
 
+            string teamOneName = "TeamMeh";
+            string teamTwoName = "TeamScania";
+            string savePath = $"{DateTime.Now.ToString("yyMMddhhmmss")}-{teamOneName}-{teamTwoName}";
+
             MatchManager.PlayMatch(
-                @"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll",
-                @"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\TeamScania.dll",
-                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml",
-                1
+                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\{teamOneName}.dll",
+                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\{teamTwoName}.dll",
+                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Matches\{savePath}.xml"
             );
 
             //MatchManager.PlayMatch("~/Teams/ProTeam.dll", "~/Teams/TeamOskar.dll", "~/Matches/");

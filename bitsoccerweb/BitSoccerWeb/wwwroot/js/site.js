@@ -1,20 +1,20 @@
 ﻿// The p5 sketch.
 var sketch = function(p) {
     // -------- members ------------------
-    var canvas, xml;
-    var currentGameState = 0;
-    var fps = 1000 / 60;
-    var playbackBufferHeight = 5;
-
-    var teamOne = {
+    let canvas, xml;
+    let currentGameState = 0;
+    const fps = 1000 / 60;
+    const playbackBufferHeight = 5;
+    
+    const teamOne = {
         players: [],
         score: 0
     };
-    var teamTwo = {
+    const teamTwo = {
         players: [],
         score: 0
     };
-    var ball;
+    let ball;
     // -----------------------------------
 
 
@@ -23,12 +23,12 @@ var sketch = function(p) {
         canvas = p.createCanvas(480, 270);
         //canvas.class("col-md-8 col-md-offset-2");
         //canvas.style("background-color", "#00FF00");
-        canvas.style("border", "2px solid black");
-        
+        //canvas.style("border", "2px solid black");
+
         p.initializeGame();
     };
 
-    p.update = function() {
+    p.update = () => {
         p.frameRate(fps);
 
         // move each team's players
@@ -45,7 +45,7 @@ var sketch = function(p) {
         }
     };
 
-    p.draw = function() {
+    p.draw = () => {
         p.background(0, 255, 0);
         p.update();
 
@@ -57,26 +57,29 @@ var sketch = function(p) {
         p.drawPlaybackBuffer();
     };
 
-    p.mousePressed = function () {
-        if (p.mouseY < p.height - playbackBufferHeight) {
+    p.mousePressed = () => {
+        if (p.mouseY < p.height - playbackBufferHeight ||
+            p.mouseY > p.height ||
+            p.mouseX < 0 ||
+            p.mouseX > p.width) {
             return;
         }
 
-        var x = p.map(p.mouseX, 0, p.width, 0, xml.gameStates.length);
+        const x = p.map(p.mouseX, 0, p.width, 0, xml.gameStates.length);
         currentGameState = p.floor(x) - 1;
-    }
+    };
 
     p.mouseDragged = function() {
         p.mousePressed();
-    }
+    };
 
     // ---------------------------
 
 
 
     // ----------- initialization functions -------------------
-    p.initializeGame = function() {
-        xml = p.getXML("/js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml");
+    p.initializeGame = () => {
+        xml = p.getXML("js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml");
         p.initializePlayers();
         p.initializeBall();
         document.getElementById("teamOneName").innerHTML = xml.teamNames.getAttribute("Team1Name");
@@ -84,29 +87,29 @@ var sketch = function(p) {
     };
 
     // Fetches the match's XML and returns the gamestates as well as the name of the teams
-    p.getXML = function(filePath) {
-        var request = new XMLHttpRequest();
+    p.getXML = (filePath) => {
+        const request = new XMLHttpRequest();
         request.open("GET", filePath, false);
         request.send();
-        var response = request.responseXML;
-        var gameStates = response.getElementsByTagName("SerializableGameState");
-        var teamNames = response.getElementsByTagName("Match")[0];
+        const response = request.responseXML;
+        const gameStates = response.getElementsByTagName("SerializableGameState");
+        const teamNames = response.getElementsByTagName("Match")[0];
 
         return {
             gameStates: gameStates,
-            teamNames: teamNames,
+            teamNames: teamNames
         };
     };
 
     // Initializes both of the teams' with players
-    p.initializePlayers = function() {
-        for (var i = 1; i <= 6; i++) {
-            teamOne.players.push(new Player("Team1Player" + i, "one"));
-            teamTwo.players.push(new Player("Team2Player" + i, "two"));
+    p.initializePlayers = () => {
+        for (let i = 1; i <= 6; i++) {
+            teamOne.players.push(new Player(`Team1Player${i}`, "one"));
+            teamTwo.players.push(new Player(`Team2Player${i}`, "two"));
         }
     };
 
-    p.initializeBall = function() {
+    p.initializeBall = () => {
         ball = new Ball();
     };
     // ------------------------------
@@ -115,52 +118,96 @@ var sketch = function(p) {
 
     // ----------- constructor functions ---------------
     // Represents a player with a position, tag (what position to search for in the XML) and a team for drawing the correct colour.
-    function Player(tag, team) {
-        this.pos = p.createVector(0, 0);
-        this.tag = tag;
-        this.team = team;
-        this.width = 10;
-        this.height = 10;
-    }
+    //function Player(tag, team) {
+    //    this.pos = p.createVector(0, 0);
+    //    this.tag = tag;
+    //    this.team = team;
+    //    this.width = 10;
+    //    this.height = 10;
+    //}
 
     // Represents a ball with a position.
-    function Ball() {
-        this.pos = p.createVector(0, 0);
-    }
+    //function Ball() {
+    //    this.pos = p.createVector(0, 0);
+    //}
     // ----------------------------------------------------
+    class Player {
+        constructor(tag, team) {
+            this.pos = p.createVector(0, 0);
+            this.tag = tag;
+            this.team = team;
+            this.width = 10;
+            this.height = 10;
+        }
 
+        move() {
+            p.move(this, this.tag);
+        }
+
+        draw() {
+            p.stroke(0);
+            const colour = {
+                r: (this.team === "one") * 255,
+                g: 0,
+                b: (this.team === "two") * 255
+            };
+
+            p.fill(colour.r, colour.g, colour.b);
+            p.rect(this.pos.x - this.width / 2,
+                this.pos.y - this.height / 2,
+                this.width,
+                this.height
+            );
+        }
+    }
+
+    class Ball {
+        constructor() {
+            this.pos = p.createVector(0, 0);
+        }
+
+        move() {
+            p.move(this, "BallPosition");
+        }
+
+        draw() {
+            p.stroke(0);
+            p.fill(255);
+            p.ellipse(this.pos.x, this.pos.y, 10, 10);
+        }
+    }
 
 
     // ------------- prototype attachments ----------------------
-    Player.prototype.move = function() {
-        p.move(this, this.tag);
-    }
+    //Player.prototype.move = function() {
+    //    p.move(this, this.tag);
+    //};
 
-    Player.prototype.draw = function() {
-        p.stroke(0);
-        var colour = {
-            r: (this.team === "one") * 255,
-            g: 0,
-            b: (this.team === "two") * 255
-        };
+    //Player.prototype.draw = function() {
+    //    p.stroke(0);
+    //    var colour = {
+    //        r: (this.team === "one") * 255,
+    //        g: 0,
+    //        b: (this.team === "two") * 255
+    //    };
 
-        p.fill(colour.r, colour.g, colour.b);
-        p.rect(this.pos.x - this.width  / 2,
-               this.pos.y - this.height / 2,
-               this.width,
-               this.height
-        );
-    }
+    //    p.fill(colour.r, colour.g, colour.b);
+    //    p.rect(this.pos.x - this.width / 2,
+    //        this.pos.y - this.height / 2,
+    //        this.width,
+    //        this.height
+    //    );
+    //};
 
-    Ball.prototype.move = function() {
-        p.move(this, "BallPosition");
-    }
+    //Ball.prototype.move = function() {
+    //    p.move(this, "BallPosition");
+    //};
 
-    Ball.prototype.draw = function() {
-        p.stroke(0);
-        p.fill(255);
-        p.ellipse(this.pos.x, this.pos.y, 10, 10);
-    }
+    //Ball.prototype.draw = function() {
+    //    p.stroke(0);
+    //    p.fill(255);
+    //    p.ellipse(this.pos.x, this.pos.y, 10, 10);
+    //};
     // --------------------------------------------------
 
 
@@ -181,13 +228,16 @@ var sketch = function(p) {
             p.map(pos.x, 0, 1920, 0, p.width),
             p.map(pos.y, 0, 1080, 0, p.height)
         );
-    }
+    };
 
     p.drawPlaybackBuffer = function() {
         p.stroke(0, 150, 0);
         p.fill(0, 150, 0);
-        p.rect(0, p.height - playbackBufferHeight, p.map(currentGameState, 0, xml.gameStates.length, 0, p.width), p.height);
-    }
+        p.rect(0,
+            p.height - playbackBufferHeight,
+            p.map(currentGameState, 0, xml.gameStates.length, 0, p.width),
+            p.height);
+    };
     // ----------------------------------------------
 };
 

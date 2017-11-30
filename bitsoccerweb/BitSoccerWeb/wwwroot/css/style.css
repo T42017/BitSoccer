@@ -103,7 +103,6 @@
     margin-top: 2vh;
 }
 
-canvas {
-    width: 100%;
-    height: auto;
+#game-div {
+    border: 1px solid black;
 }
