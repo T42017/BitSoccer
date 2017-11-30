@@ -66,7 +66,7 @@ var sketch = function(p) {
         }
 
         const x = p.map(p.mouseX, 0, p.width, 0, xml.gameStates.length);
-        currentGameState = p.floor(x) - 1;
+        currentGameState = p.floor(x);
     };
 
     p.mouseDragged = function() {
