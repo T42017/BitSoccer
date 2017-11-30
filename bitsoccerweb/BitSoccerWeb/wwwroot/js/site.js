@@ -213,16 +213,19 @@ var sketch = function(p) {
 
 
     // ------------- helper functions ---------------
-    p.move = function(obj, tag) {
+    p.move = (obj, tag) => {
         if (currentGameState >= xml.gameStates.length || !obj || !obj.pos) {
             return;
         }
 
-        var gameState = xml.gameStates[currentGameState++];
-        var playerPosXML = gameState.getElementsByTagName(tag);
-        var pos = {
-            x: parseInt(playerPosXML[0].getAttribute("X")),
-            y: parseInt(playerPosXML[0].getAttribute("Y"))
+        const gameState = xml.gameStates[currentGameState++];
+        const playerPosXML = gameState.getElementsByTagName(tag);
+        const playerTag = playerPosXML[0];
+        const pos = {
+            x: parseInt(playerTag.getAttribute("X")),
+            y: parseInt(playerTag.getAttribute("Y"))
+            //x: parseInt(playerPosXML[0].getAttribute("X")),
+            //y: parseInt(playerPosXML[0].getAttribute("Y"))
         };
         obj.pos = p.createVector(
             p.map(pos.x, 0, 1920, 0, p.width),
