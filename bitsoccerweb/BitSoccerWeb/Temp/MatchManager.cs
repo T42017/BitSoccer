@@ -16,9 +16,10 @@ namespace BitSoccerWeb.Temp
         private static void PlayMatch(IGameEngine gameEngine, string savePath, int? matchSeed)
         {
             int gameStep = 0;
-            GameState gameState = null;
 
-            Global.Random = matchSeed == null ? new Random() : new Random((int) matchSeed);
+            Global.Random = matchSeed == null ? 
+                            new Random() : 
+                            new Random((int) matchSeed);
             gameEngine.setTimeout(false);
 
             var match = new Match()
