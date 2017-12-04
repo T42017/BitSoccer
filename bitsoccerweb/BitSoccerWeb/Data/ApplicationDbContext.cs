@@ -10,6 +10,8 @@ namespace BitSoccerWeb.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<BitSoccerWeb.Models.Team> Teams { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
