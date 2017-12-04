@@ -22,7 +22,7 @@ var sketch = function(p) {
 
     // ----- p5 functions -------
     p.setup = function() {
-        canvas = p.createCanvas(960, 540);
+        canvas = p.createCanvas(1920, 1080);
         backgroundImage = p.loadImage("js/SoccerFieldPs.png");
         //canvas.class("col-md-8 col-md-offset-2");
         //canvas.style("background-color", "#00FF00");
@@ -49,7 +49,7 @@ var sketch = function(p) {
     };
 
     p.draw = () => {
-        backgroundImage.resize(960, 0);
+        backgroundImage.resize(1920, 0);
         p.image(backgroundImage, 0, 0);
         p.update();
 
@@ -231,10 +231,11 @@ var sketch = function(p) {
             //x: parseInt(playerPosXML[0].getAttribute("X")),
             //y: parseInt(playerPosXML[0].getAttribute("Y"))
         };
-        obj.pos = p.createVector(
-            p.map(pos.x, 0, 1920, 0, p.width),
-            p.map(pos.y, 0, 1080, 0, p.height)
-        );
+        //obj.pos = p.createVector(
+        //    p.map(pos.x, 0, 1920, 0, p.width),
+        //    p.map(pos.y, 0, 1080, 0, p.height)
+        //);
+        obj.pos = p.createVector(pos.x, pos.y);
     };
 
     p.drawPlaybackBuffer = function() {

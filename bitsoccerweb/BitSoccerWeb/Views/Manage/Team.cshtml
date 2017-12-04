@@ -12,9 +12,22 @@
     <div class="form-group">
         <div class="col-md-10">
             <p>Upload your own teams</p>
-            <input type="file" name="files" accept=".dll" multiple/>
+            <input type="file" name="file" accept=".dll"/>
         </div>
     </div>
+    
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="teamName">
+                Team name
+            </label>
+            <br />
+
+            <input type="text" id="teamName" name="teamName" />
+        </div>
+    </div>
+    
+
     <div class="form-group">
         <div class="col-md-10">
             <input type="submit" value="Upload" onchange="fileupload(filename)"/>
