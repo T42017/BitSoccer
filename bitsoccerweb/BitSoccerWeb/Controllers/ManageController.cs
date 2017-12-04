@@ -62,6 +62,7 @@ namespace BitSoccerWeb.Controllers
             var model = new IndexViewModel
             {
                 Username = user.UserName,
+                DisplayName = user.DisplayName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
@@ -86,6 +87,11 @@ namespace BitSoccerWeb.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if (model.DisplayName != user.DisplayName)
+            {
+                user.DisplayName = model.DisplayName;
+            }
+
             var email = user.Email;
             if (model.Email != email)
             {
@@ -105,6 +111,7 @@ namespace BitSoccerWeb.Controllers
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
             }
+            await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));

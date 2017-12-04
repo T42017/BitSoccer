@@ -10,6 +10,9 @@ namespace BitSoccerWeb.Models.ManageViewModels
     {
         public string Username { get; set; }
 
+        [Display(Name = "Display name")]
+        public string DisplayName { get; set; }
+
         public bool IsEmailConfirmed { get; set; }
 
         [Required]

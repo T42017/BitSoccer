@@ -28,7 +28,7 @@ var sketch = function(p) {
         //canvas.style("background-color", "#00FF00");
         //canvas.style("border", "2px solid black");
 
-        p.initializeGame();
+        p.initializeGame("TeamOskar", "TeamOskar");
     };
 
     p.update = () => {
@@ -82,8 +82,8 @@ var sketch = function(p) {
 
 
     // ----------- initialization functions -------------------
-    p.initializeGame = () => {
-        xml = p.getXML("js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml");
+    p.initializeGame = (teamOneName, teamTwoName) => {
+        xml = p.getXML(`js/preview-${teamOneName}-${teamTwoName}.xml`);
         p.initializePlayers();
         p.initializeBall();
         document.getElementById("teamOneName").innerHTML = xml.teamNames.getAttribute("Team1Name");
