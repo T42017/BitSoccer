@@ -103,6 +103,16 @@
     margin-top: 2vh;
 }
 
-#game-div {
-    border: 1px solid black;
+#defaultCanvas0 {
+    height: 100% !important;
+    width: 100% !important;
+    z-index: 10;
 }
+
+.game-div {
+    z-index: 10;
+}
+
+
+
+
