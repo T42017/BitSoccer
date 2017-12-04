@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 
 namespace BitSoccerWeb.Controllers
@@ -43,15 +47,48 @@ namespace BitSoccerWeb.Controllers
             string teamTwoName = "TeamScania";
             string savePath = $"{DateTime.Now.ToString("yyMMddhhmmss")}-{teamOneName}-{teamTwoName}";
 
-            MatchManager.PlayMatch(
-                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\{teamOneName}.dll",
-                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Teams\{teamTwoName}.dll",
-                $@"C:\Users\usr\Documents\Git\12-asp-bitsoccer\BitSoccer\bitsoccerweb\BitSoccerWeb\Matches\{savePath}.xml"
-            );
 
-            //MatchManager.PlayMatch("~/Teams/ProTeam.dll", "~/Teams/TeamOskar.dll", "~/Matches/");
 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult TwoTeamSim()
+        {
+            
+            //var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            //var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOne.dll";
+            //var teamOne = Path.Combine(projectFolder + teamOnePath);
+
+            //var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll";
+            //var teamTwo = Path.Combine(projectFolder + teamTwoPath);
+
+            //var teamOneName = teamOnePath.Split(@"Teams\");
+            //var teamTwoName = teamTwoPath.Split(@"Teams\");
+
+            //var t1Name = teamOneName[1].Split(".dll");
+            //var t2Name = teamTwoName[1].Split(".dll");
+            
+            //var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml";
+            
+            //var matches = Path.Combine(projectFolder + matchPath);
+
+            
+            //    MatchManager.PlayMatch(teamOne, teamTwo, matches);
+           
+            
+
+
+            //var document = XDocument.Load(matches);
+            //var resultFromXml = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
+
+            //string[] s = resultFromXml.Split();
+
+            //string result = t1Name[0] + " " + s[0] + " - " + " " + s[1] + " " + t2Name[0];
+            //Debug.WriteLine(result);
+            //ViewBag.Result = result;
+            
+            return View("../Home/Simulate");
         }
 
         public IActionResult Error()

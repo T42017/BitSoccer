@@ -1,9 +1,30 @@
 ﻿
-@*@{
+@{
     ViewData["Title"] = "Simulations";
 }
 
 <h2>Simulations</h2>
 <div class="well">
-    
-</div>*@
+    <div class="panel panel-default" style="padding: 10px; margin: 10px">
+        <div id="Tabs" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#twoteams" aria-controls="twoteams" role="tab" data-toggle="tab">
+                       Two Teams
+                    </a>
+                </li>
+                <li><a href="#tournament" aria-controls="tournament" role="tab" data-toggle="tab">Tournament</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" style="padding-top: 20px;">
+                <div role="tabpanel" class="tab-pane active" id="twoteams">
+                    @await Html.PartialAsync("_TwoTeamSim")
+                </div>
+                <div role="tabpanel" class="tab-pane" id="tournament">
+                     @await Html.PartialAsync("_Tournament")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
