@@ -136,7 +136,7 @@ namespace GameEngine
                 try
                 {
                     //team2 = this._team2.getTeamActions(this._teamInfos[1].b(), this._teamInfos[0].CopyTeamInfo().GetTeam(), this._ballInfo.CopyBallInfo().CopyBall(), matchInfo2);
-                    _teamTwo.Action(_teamInfos[1].b(), _teamInfos[0].CopyTeamInfo().GetTeam(), _ballInfo.CopyBall(), matchInfo2);
+                    _teamTwo.Action(_teamInfos[1].b(), _teamInfos[0].CopyTeamInfo().GetTeam(), _ballInfo.CopyBallInfo().CopyBall(), matchInfo2);
                     team2 = _teamInfos[1].b();
                 }
                 catch (Exception ex)

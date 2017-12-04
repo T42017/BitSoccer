@@ -57,7 +57,7 @@ namespace BitSoccerWeb.Controllers
         {
 
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOne.dll";
+            var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamScania.dll";
             var teamOne = Path.Combine(projectFolder + teamOnePath);
 
             var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll";
@@ -69,7 +69,7 @@ namespace BitSoccerWeb.Controllers
             var t1Name = teamOneName[1].Split(".dll");
             var t2Name = teamTwoName[1].Split(".dll");
 
-            var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml";
+            var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{DateTime.Now.ToString("yyMMddhhmmss")}-{t1Name[0]}-{t2Name[0]}.xml";
 
             var matches = Path.Combine(projectFolder + matchPath);
 

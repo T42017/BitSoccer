@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\171130083835-TeamMeh-TeamScania.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\GameEngine\GameEngine.csproj" />
   </ItemGroup>
@@ -51,6 +47,11 @@
 
   <ItemGroup>
     <Folder Include="Matches\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\1a1bc35c-8472-407e-ad2e-126ecdc47958.xml" />
+    <None Include="wwwroot\js\4d07c53c-3e00-4b70-9416-14e5ea023766.xml" />
   </ItemGroup>
 
 </Project>

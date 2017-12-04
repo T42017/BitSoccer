@@ -78,12 +78,12 @@ var sketch = function(p) {
     };
 
     // ---------------------------
-
-
+    
+   
 
     // ----------- initialization functions -------------------
     p.initializeGame = () => {
-        xml = p.getXML("js/2eba505c-aeb9-4e76-9be3-1933109a6a38.xml");
+        xml = p.getXML("js/171204013639-TeamScania-TeamOskar.xml");
         p.initializePlayers();
         p.initializeBall();
         document.getElementById("teamOneName").innerHTML = xml.teamNames.getAttribute("Team1Name");
