@@ -63,13 +63,13 @@ namespace BitSoccerWeb.Controllers
             var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll";
             var teamTwo = Path.Combine(projectFolder + teamTwoPath);
 
-            var teamOneName = teamOnePath.Split(@"Teams\");
-            var teamTwoName = teamTwoPath.Split(@"Teams\");
+            var firstSplit = teamOnePath.Split(@"Teams\");
+            var secondSplit = teamTwoPath.Split(@"Teams\");
 
-            var t1Name = teamOneName[1].Split(".dll");
-            var t2Name = teamTwoName[1].Split(".dll");
+            var lastSplitTeamOne = firstSplit[1].Split(".dll");
+            var lastSplitTeamTwo = secondSplit[1].Split(".dll");
 
-            var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{DateTime.Now.ToString("yyMMddhhmmss")}-{t1Name[0]}-{t2Name[0]}.xml";
+            var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{DateTime.Now.ToString("yyMMddhhmmss")}-{lastSplitTeamOne[0]}-{lastSplitTeamTwo[0]}.xml";
 
             var matches = Path.Combine(projectFolder + matchPath);
 
@@ -80,13 +80,10 @@ namespace BitSoccerWeb.Controllers
 
 
             var document = XDocument.Load(matches);
-            var resultFromXml = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value + " - " +
-                                document.XPathSelectElements("//SerializableGameState").Last().LastAttribute.Value;
+            var teamOneScore = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
+            var teamTwoScore = document.XPathSelectElements("//SerializableGameState").Last().LastAttribute.Value;
 
-
-
-
-            string result = resultFromXml;
+            string result = lastSplitTeamOne[0] + " " + teamOneScore + " - " + teamTwoScore + " " + lastSplitTeamTwo[0];
             
             ViewBag.Result = result;
 
