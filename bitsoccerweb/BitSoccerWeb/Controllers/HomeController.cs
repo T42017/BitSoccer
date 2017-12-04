@@ -52,37 +52,37 @@ namespace BitSoccerWeb.Controllers
         public IActionResult TwoTeamSim()
         {
             
-            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOne.dll";
-            var teamOne = Path.Combine(projectFolder + teamOnePath);
+            //var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            //var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOne.dll";
+            //var teamOne = Path.Combine(projectFolder + teamOnePath);
 
-            var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll";
-            var teamTwo = Path.Combine(projectFolder + teamTwoPath);
+            //var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll";
+            //var teamTwo = Path.Combine(projectFolder + teamTwoPath);
 
-            var teamOneName = teamOnePath.Split(@"Teams\");
-            var teamTwoName = teamTwoPath.Split(@"Teams\");
+            //var teamOneName = teamOnePath.Split(@"Teams\");
+            //var teamTwoName = teamTwoPath.Split(@"Teams\");
 
-            var t1Name = teamOneName[1].Split(".dll");
-            var t2Name = teamTwoName[1].Split(".dll");
+            //var t1Name = teamOneName[1].Split(".dll");
+            //var t2Name = teamTwoName[1].Split(".dll");
             
-            var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml";
+            //var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml";
             
-            var matches = Path.Combine(projectFolder + matchPath);
+            //var matches = Path.Combine(projectFolder + matchPath);
 
             
-                MatchManager.PlayMatch(teamOne, teamTwo, matches);
+            //    MatchManager.PlayMatch(teamOne, teamTwo, matches);
            
             
 
 
-            var document = XDocument.Load(matches);
-            var resultFromXml = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
+            //var document = XDocument.Load(matches);
+            //var resultFromXml = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
 
-            string[] s = resultFromXml.Split();
+            //string[] s = resultFromXml.Split();
 
-            string result = t1Name[0] + " " + s[0] + " - " + " " + s[1] + " " + t2Name[0];
-            Debug.WriteLine(result);
-            ViewBag.Result = result;
+            //string result = t1Name[0] + " " + s[0] + " - " + " " + s[1] + " " + t2Name[0];
+            //Debug.WriteLine(result);
+            //ViewBag.Result = result;
             
             return View("../Home/Simulate");
         }
