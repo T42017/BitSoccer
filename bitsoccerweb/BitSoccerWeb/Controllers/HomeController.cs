@@ -53,8 +53,10 @@ namespace BitSoccerWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult TwoTeamSim()
+        public IActionResult TwoTeamSim(string nrOfMatches)
         {
+
+            Debug.WriteLine(nrOfMatches);
 
             var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamScania.dll";
@@ -75,9 +77,6 @@ namespace BitSoccerWeb.Controllers
 
 
             MatchManager.PlayMatch(teamOne, teamTwo, matches);
-
-
-
 
             var document = XDocument.Load(matches);
             var teamOneScore = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
