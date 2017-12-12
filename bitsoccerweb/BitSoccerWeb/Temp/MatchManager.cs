@@ -21,12 +21,12 @@ namespace BitSoccerWeb.Temp
             Global.Random = matchSeed == null ? new Random() : new Random((int) matchSeed);
             gameEngine.setTimeout(false);
 
-            var match = new Match()
+            var match = new Match
             {
                 Team1Name = gameEngine.Team1Name(),
-                Team2Name = gameEngine.Team2Name()
+                Team2Name = gameEngine.Team2Name(),
+                MatchSeed = Guid.NewGuid().ToString(),
             };
-
             while (gameStep < Constants.GameEngineMatchLength)
             {
                 gameStep++;

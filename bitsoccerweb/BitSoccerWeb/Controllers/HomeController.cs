@@ -82,11 +82,12 @@ namespace BitSoccerWeb.Controllers
             var document = XDocument.Load(matches);
             var teamOneScore = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
             var teamTwoScore = document.XPathSelectElements("//SerializableGameState").Last().LastAttribute.Value;
+            var matchSeed = document.XPathSelectElements("//Match").First().FirstAttribute.NextAttribute.NextAttribute.Value;
 
             string result = lastSplitTeamOne[0] + " " + teamOneScore + " - " + teamTwoScore + " " + lastSplitTeamTwo[0];
             
             ViewBag.Result = result;
-
+            ViewBag.MatchSeed = matchSeed;
             return View("../Home/Simulate");
         }
 

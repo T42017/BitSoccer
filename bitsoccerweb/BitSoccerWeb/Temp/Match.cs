@@ -7,6 +7,9 @@ namespace BitSoccerWeb.Temp
     public class Match
     {
         [XmlAttribute]
+        public string MatchSeed { get; set; }
+
+        [XmlAttribute]
         public string Team1Name { get; set; }
 
         [XmlAttribute]
