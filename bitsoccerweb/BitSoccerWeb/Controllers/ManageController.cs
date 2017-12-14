@@ -14,7 +14,10 @@ using BitSoccerWeb.Models.ManageViewModels;
 using BitSoccerWeb.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyModel;
 
 namespace BitSoccerWeb.Controllers
 {
@@ -136,6 +139,52 @@ namespace BitSoccerWeb.Controllers
             return RedirectToAction("Team");
         }
 
+        public async Task<IActionResult> EditTeam(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.Id == id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+            return View(team);
+        }
+
+        [HttpPost, ActionName("EditTeam")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTeam(int id, [Bind("Id,FilePath,TeamName,UserId")] Team team)
+        //public async Task<IActionResult> EditTeam(int id, [Bind(Include="Id,FilePath,TeamName,UserId")] Team team)
+        {
+            if (id != team.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(team);
+            }
+
+            try
+            {
+                _context.Update(team);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TeamExists(team.Id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+            return RedirectToAction("Team");
+        }
+
         public async Task<IActionResult> Team()
         {
             return View();
@@ -154,6 +203,11 @@ namespace BitSoccerWeb.Controllers
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+        }
+
+        private bool TeamExists(int id)
+        {
+            return _context.Teams.Any(team => team.Id == id);
         }
 
         #endregion
