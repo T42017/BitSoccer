@@ -93,7 +93,7 @@ namespace BitSoccerWeb.Controllers
                 ViewBag.Teams = teams;
                 
             }
-
+            
             ViewBag.NrOfMatches = nrOfMatches;
             return View("../Home/Simulate");
         }

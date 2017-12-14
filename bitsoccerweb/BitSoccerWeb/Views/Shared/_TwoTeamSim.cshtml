@@ -70,14 +70,18 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach (var teamInfo in ViewBag.List)
+                                                    @if (ViewBag.List != null)
+                                                    {
+                                                        foreach (var teamInfo in ViewBag.List)
                                                         {
-                                                            <tr style="text-align: left">
-                                                            <td>@teamInfo.Item3</td>
-                                                            <td>@teamInfo.Item1</td>
-                                                            <td>@teamInfo.Item2</td>
-                                                            </tr>     
+                                                          <tr style="text-align: left">
+                                                              <td>@teamInfo.Item3</td>
+                                                              <td>@teamInfo.Item1</td>
+                                                              <td>@teamInfo.Item2</td>
+                                                          </tr>
                                                         }
+                                                    }
+                                                    
                                                     </tbody>
                                                 </table>
                                             </div>
