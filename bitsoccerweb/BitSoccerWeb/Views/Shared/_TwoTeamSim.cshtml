@@ -1,5 +1,9 @@
-﻿@using System.Runtime.InteropServices.ComTypes
+﻿@using System.Linq
+@using System.Runtime.InteropServices.ComTypes
+@using BitSoccerWeb.Data
 @using BitSoccerWeb.Temp
+@inject ApplicationDbContext Context
+@inject UserManager<ApplicationUser> UserManager
 <section>
         <div class="form-horizontal">
             <fieldset>
@@ -13,9 +17,10 @@
                                 <label class="col-md-4 control-label" for="SelectTeamOne">Select Team One</label>
                                 <div class="col-md-4">
                                     <select id="SelectTeamOne" name="TeamOne" class="form-control">
-                                        <option value="1">Team1</option>
-                                        <option value="2">Team2</option>
-                                        <option value="3">Team3</option>
+                                        @foreach (var team in Context.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                                        {
+                                            <option value="@team.Id">@team.TeamName</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -25,9 +30,11 @@
                                 <label class="col-md-4 control-label" for="SelectTeamTwo">Select Team Two</label>
                                 <div class="col-md-4">
                                     <select id="SelectTeamTwo" name="TeamTwo" class="form-control">
-                                        <option value="1">Team1</option>
-                                        <option value="2">Team2</option>
-                                        <option value="3">Team3</option>
+                                        @foreach (var team in Context.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                                        {
+                                            <option value="@team.Id">@team.TeamName</option>
+                                        }
+
                                     </select>
                                 </div>
                             </div>

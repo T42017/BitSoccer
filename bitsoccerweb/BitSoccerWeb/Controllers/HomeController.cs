@@ -53,10 +53,8 @@ namespace BitSoccerWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult TwoTeamSim(string NrOfMatches)
+        public IActionResult TwoTeamSim(int nrOfMatches, int TeamOne, int TeamTwo)
         {
-            
-            var nrOfMatches = int.Parse(NrOfMatches);
 
             List<(string, string, int)> info = new List<ValueTuple<string, string, int>>();
 
