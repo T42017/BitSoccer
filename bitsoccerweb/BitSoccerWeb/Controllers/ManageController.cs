@@ -134,6 +134,7 @@ namespace BitSoccerWeb.Controllers
                 FilePath = file.FileName,
                 UserId = _userManager.GetUserId(User)
             };
+
             await _context.Teams.AddAsync(team);
             await _context.SaveChangesAsync();
             return RedirectToAction("Team");

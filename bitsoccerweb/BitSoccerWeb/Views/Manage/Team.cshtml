@@ -12,12 +12,14 @@
     ViewData.AddActivePage(ManageNavPages.Team);
 }
 <script src="js/FileUpload.js"></script>
-<h4>@ViewData["Title"]</h4>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
-            <h4>Add new team</h4>
+            <h4>
+                Add new team
+            </h4>
+
             <form method="post" enctype="multipart/form-data" asp-controller="Manage" asp-action="UploadFile">
                 <div class="form-group">
                     <div class="col-md-10">
@@ -47,18 +49,10 @@
         </div>
         
         <div class="col-md-6">
-            <h4>My Teams</h4>
-            @*<ul class="list-group" title="Teams">
-                @foreach (var team in Context.Teams.Where(team => team.UserId == UserManager.GetUserId(User)))
-                {
-                    <li class="list-group-item" style="word-wrap: break-word;">
-                        @team.TeamName
-                    </li>
+            <h4>
+                My Teams
+            </h4>
 
-                    <button class="btn btn-default pull-right">Edit</button>
-                }
-            </ul>*@
-            
             <table class="table" style="table-layout: fixed;">
                 @foreach (var team in Context.Teams.Where(team => team.UserId == UserManager.GetUserId(User) @*|| team.UserId == null*@))
                 {
