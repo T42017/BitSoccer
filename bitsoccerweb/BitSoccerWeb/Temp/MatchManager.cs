@@ -20,6 +20,7 @@ namespace BitSoccerWeb.Temp
             Global.Random = matchSeed == null ? 
                             new Random() : 
                             new Random((int) matchSeed);
+
             gameEngine.setTimeout(false);
 
             var match = new Match
