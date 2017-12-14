@@ -64,16 +64,15 @@
                 {
                     <tr>
                         <td style="word-wrap: break-word;">@team.TeamName</td>
-                        <td class="text-center">
+                        @*<td class="text-center">
+                            
+                        </td>*@
+                        <td>
                             <a asp-action="EditTeam" asp-route-id="@team.Id">
                                 <i class="glyphicon glyphicon-edit text-primary"></i>
                             </a>
 
-                            <a asp-action="Details" asp-route-id="@team.Id">
-                                <i class="glyphicon glyphicon-eye-open text-primary"></i>
-                            </a>
-
-                            <a asp-action="Delete" asp-route-id="@team.Id">
+                            <a asp-action="DeleteTeam" asp-route-id="@team.Id">
                                 <i class="glyphicon glyphicon-trash text-danger"></i>
                             </a>
                         </td>

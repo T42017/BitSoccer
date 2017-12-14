@@ -185,6 +185,33 @@ namespace BitSoccerWeb.Controllers
             return RedirectToAction("Team");
         }
 
+        public async Task<IActionResult> DeleteTeam(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var team = await _context.Teams
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return View(team);
+        }
+
+        [HttpPost, ActionName("DeleteTeam")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Teams.Remove(team);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Team));
+        }
+
         public async Task<IActionResult> Team()
         {
             return View();
