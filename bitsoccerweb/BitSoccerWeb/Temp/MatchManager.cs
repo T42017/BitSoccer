@@ -25,7 +25,7 @@ namespace BitSoccerWeb.Temp
             {
                 Team1Name = gameEngine.Team1Name(),
                 Team2Name = gameEngine.Team2Name(),
-                MatchSeed = Guid.NewGuid().ToString(),
+                MatchSeed = Global.Random.Next(int.MaxValue)
             };
             while (gameStep < Constants.GameEngineMatchLength)
             {
