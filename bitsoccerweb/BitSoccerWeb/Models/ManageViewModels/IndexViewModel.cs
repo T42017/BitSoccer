@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using BitSoccerWeb.Data;
 
 namespace BitSoccerWeb.Models.ManageViewModels
 {
     public class IndexViewModel
     {
         public string Username { get; set; }
+
+        [Display(Name = "Display name")]
+        public string DisplayName { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -21,5 +25,7 @@ namespace BitSoccerWeb.Models.ManageViewModels
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
+
+        public List<Team> Teams { get; }
     }
 }

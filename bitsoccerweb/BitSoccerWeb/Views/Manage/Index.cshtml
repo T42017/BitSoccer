@@ -1,7 +1,11 @@
-﻿@using BitSoccerWeb.Models.ManageViewModels
+﻿@using BitSoccerWeb.Data
+@using BitSoccerWeb.Models.ManageViewModels
 @using BitSoccerWeb.Views.Manage
 @using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Linq
 @model BitSoccerWeb.Models.ManageViewModels.IndexViewModel
+@inject UserManager<ApplicationUser> UserManager
+@inject ApplicationDbContext DbContext
 @{
     ViewData["Title"] = "Profile";
     ViewData.AddActivePage(ManageNavPages.Index);
@@ -17,6 +21,12 @@
                 <label asp-for="Username"></label>
                 <input asp-for="Username" class="form-control" disabled/>
             </div>
+            
+            <div class="form-group">
+                <label asp-for="DisplayName"></label>
+                <input asp-for="DisplayName" class="form-control"/>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Email"></label>
                 @if (Model.IsEmailConfirmed)
@@ -40,6 +50,15 @@
             </div>
             <button type="submit" class="btn btn-default">Save</button>
         </form>
+    </div>
+    
+    <div class="col-md-2">
+        @foreach (var team in DbContext.Teams.Where(team => team.UserId == UserManager.GetUserId(User)))
+        {
+            <p>
+                @team.TeamName
+            </p>
+        }
     </div>
 </div>
 

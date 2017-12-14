@@ -42,13 +42,13 @@ var sketch = function(p) {
 
     // ----- p5 functions -------
     p.setup = function() {
-        canvas = p.createCanvas(960, 540);
+        canvas = p.createCanvas(1920, 1080);
         backgroundImage = p.loadImage("js/SoccerFieldPs.png");
         //canvas.class("col-md-8 col-md-offset-2");
         //canvas.style("background-color", "#00FF00");
         //canvas.style("border", "2px solid black");
 
-        p.initializeGame();
+        p.initializeGame("TeamOskar", "TeamOskar");
     };
 
     p.update = () => {
@@ -69,7 +69,7 @@ var sketch = function(p) {
     };
 
     p.draw = () => {
-        backgroundImage.resize(960, 0);
+        backgroundImage.resize(1920, 0);
         p.image(backgroundImage, 0, 0);
         p.update();
 
@@ -90,7 +90,7 @@ var sketch = function(p) {
         }
 
         const x = p.map(p.mouseX, 0, p.width, 0, xml.gameStates.length);
-        currentGameState = p.floor(x) - 1;
+        currentGameState = p.floor(x);
     };
 
     p.mouseDragged = function() {
@@ -102,7 +102,7 @@ var sketch = function(p) {
    
 
     // ----------- initialization functions -------------------
-    p.initializeGame = () => {
+    p.initializeGame = (teamOneName, teamTwoName) => {
         xml = p.getXML("js/171130083835-TeamMeh-TeamScania.xml");
         p.initializePlayers();
         p.initializeBall();
@@ -240,21 +240,25 @@ var sketch = function(p) {
 
 
     // ------------- helper functions ---------------
-    p.move = function(obj, tag) {
+    p.move = (obj, tag) => {
         if (currentGameState >= xml.gameStates.length || !obj || !obj.pos) {
             return;
         }
 
-        var gameState = xml.gameStates[currentGameState++];
-        var playerPosXML = gameState.getElementsByTagName(tag);
-        var pos = {
-            x: parseInt(playerPosXML[0].getAttribute("X")),
-            y: parseInt(playerPosXML[0].getAttribute("Y"))
+        const gameState = xml.gameStates[currentGameState++];
+        const playerPosXML = gameState.getElementsByTagName(tag);
+        const playerTag = playerPosXML[0];
+        const pos = {
+            x: parseInt(playerTag.getAttribute("X")),
+            y: parseInt(playerTag.getAttribute("Y"))
+            //x: parseInt(playerPosXML[0].getAttribute("X")),
+            //y: parseInt(playerPosXML[0].getAttribute("Y"))
         };
-        obj.pos = p.createVector(
-            p.map(pos.x, 0, 1920, 0, p.width),
-            p.map(pos.y, 0, 1080, 0, p.height)
-        );
+        //obj.pos = p.createVector(
+        //    p.map(pos.x, 0, 1920, 0, p.width),
+        //    p.map(pos.y, 0, 1080, 0, p.height)
+        //);
+        obj.pos = p.createVector(pos.x, pos.y);
     };
 
     p.drawPlaybackBuffer = function() {
