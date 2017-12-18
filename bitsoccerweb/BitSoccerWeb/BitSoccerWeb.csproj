@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
   </ItemGroup>
 
@@ -43,6 +43,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Matches\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\1a1bc35c-8472-407e-ad2e-126ecdc47958.xml" />
+    <None Include="wwwroot\js\4d07c53c-3e00-4b70-9416-14e5ea023766.xml" />
   </ItemGroup>
 
   <ItemGroup>

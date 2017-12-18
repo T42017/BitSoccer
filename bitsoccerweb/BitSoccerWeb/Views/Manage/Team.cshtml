@@ -1,6 +1,12 @@
-﻿@using BitSoccerWeb.Models.ManageViewModels
+﻿@using System.Linq
+@using BitSoccerWeb.Data
+@using BitSoccerWeb.Models.ManageViewModels
 @using BitSoccerWeb.Views.Manage
 @using Microsoft.AspNetCore.Mvc.Rendering
+
+@inject ApplicationDbContext Context
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Team";
     ViewData.AddActivePage(ManageNavPages.Team);
@@ -8,16 +14,72 @@
 <script src="js/FileUpload.js"></script>
 <h4>@ViewData["Title"]</h4>
 
-<form method="post" enctype="multipart/form-data" asp-controller="Manage" asp-action="UploadFile">
-    <div class="form-group">
-        <div class="col-md-10">
-            <p>Upload your own teams</p>
-            <input type="file" name="files" accept=".dll" multiple/>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Add new team</h4>
+            <form method="post" enctype="multipart/form-data" asp-controller="Manage" asp-action="UploadFile">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <p>Upload your own teams</p>
+                        <input type="file" name="file" accept=".dll"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <label for="teamName">
+                            Team name
+                        </label>
+                        <br/>
+
+                        <input type="text" id="teamName" name="teamName" class="form-control"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="submit" value="Upload" onchange="fileupload(filename)" class="btn btn-default"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <h4>My Teams</h4>
+            @*<ul class="list-group" title="Teams">
+                @foreach (var team in Context.Teams.Where(team => team.UserId == UserManager.GetUserId(User)))
+                {
+                    <li class="list-group-item" style="word-wrap: break-word;">
+                        @team.TeamName
+                    </li>
+
+                    <button class="btn btn-default pull-right">Edit</button>
+                }
+            </ul>*@
+            
+            <table class="table" style="table-layout: fixed;">
+                @foreach (var team in Context.Teams.Where(team => team.UserId == UserManager.GetUserId(User) @*|| team.UserId == null*@))
+                {
+                    <tr>
+                        <td style="word-wrap: break-word;">@team.TeamName</td>
+                        <td class="text-center">
+                            <a asp-action="EditTeam" asp-route-id="@team.Id">
+                                <i class="glyphicon glyphicon-edit text-primary"></i>
+                            </a>
+
+                            <a asp-action="Details" asp-route-id="@team.Id">
+                                <i class="glyphicon glyphicon-eye-open text-primary"></i>
+                            </a>
+
+                            <a asp-action="Delete" asp-route-id="@team.Id">
+                                <i class="glyphicon glyphicon-trash text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Upload" onchange="fileupload(filename)"/>
-        </div>
-    </div>
-</form>
+</div>

@@ -156,6 +156,7 @@ public class PlayerInfo
         this._TackleCoolDowntimer = time;
     }
 
+    // Probably the method that mirrors the field for the second team
     [SpecialName]
     public PlayerInfo GetPlayerInfo1()
     {

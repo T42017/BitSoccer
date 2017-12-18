@@ -1,0 +1,124 @@
+﻿<section>
+    <form class="form-horizontal">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Tournament</legend>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="SelectTeamOne">Select Team One</label>
+                        <div class="col-md-4">
+                            <select id="SelectTeamOne" name="TeamOne" class="form-control">
+                                <option value="1">Team1</option>
+                                <option value="2">Team2</option>
+                                <option value="3">Team3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="SelectTeamTwo">Select Team Two</label>
+                        <div class="col-md-4">
+                            <select id="SelectTeamTwo" name="TeamTwo" class="form-control">
+                                <option value="1">Team1</option>
+                                <option value="2">Team2</option>
+                                <option value="3">Team3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="test"></div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            <a href="#" id="btn-add" class="btn btn-xs" onclick="add();"><span class="glyphicon glyphicon-plus"></span> Add</a>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="NrOfMatches">Number of Matches</label>
+                        <div class="col-md-4">
+                            <input id="NrOfMatches" name="NrOfMatches" type="text" placeholder="" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            <button id="submitSim" name="submitSim" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 sim">
+                    <div class="col-md-12">
+                        <table id="table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Name</th>
+                                    <th>Wins</th>
+                                    <th>Loses</th>
+                                    <th>Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>TeamOskar</td>
+                                <td>10</td>
+                                <td>0</td>
+                                <td>30</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</section>

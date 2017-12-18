@@ -5,30 +5,30 @@
 }
 
 <div class="container container-top">
-    <div id="game-div" class="row">
-        @*<canvas id="canvas" class="col-md-8 col-md-offset-2" style="background-color: black;"></canvas>*@
+    <div class="row">
+                <div id="game-div" class="game-div"></div>       
     </div>
-
     <div class="row">
         <div class="col-md-3 col-md-offset-1">
             <form asp-controller="Home" asp-action="Index" method="post">
                 <select asp-for="Teams" asp-items="@Model.Teams" class="h1"> 
-                    
-                </select>
-                
+                    <span id="teamOneName">
+                        Team1
+                    </span>
+                </h1>
             </form>
         </div>
         <div class="col-md-3 col-md-offset-1">
             <h1 class="center">
-                [0-0]
+                [<span id="teamOneScore">0</span>-<span id="teamTwoScore">0</span>]
             </h1>
         </div>
         <div class="col-md-3 col-md-offset-1">
             <form asp-controller="Home" asp-action="Index" method="post">
                 <select id="SelectTeamTwo" name="TeamTwo" class="h1 center">
-                    <option value="1">Team 1</option>
-                    <option value="2">Team 2</option>
-                    <option value="3">Team 3</option>
+                    <span id="teamTwoName">
+                        Team2
+                    </span>
                 </select>
             </form>
         </div>

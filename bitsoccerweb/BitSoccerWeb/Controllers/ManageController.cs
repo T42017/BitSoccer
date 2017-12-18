@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BitSoccerWeb.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,10 @@ using BitSoccerWeb.Models.ManageViewModels;
 using BitSoccerWeb.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyModel;
 
 namespace BitSoccerWeb.Controllers
 {
@@ -27,7 +32,8 @@ namespace BitSoccerWeb.Controllers
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
         private IHostingEnvironment _hostingEnvironment;
-
+        private readonly ApplicationDbContext _context;
+        
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -37,7 +43,8 @@ namespace BitSoccerWeb.Controllers
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
-          IHostingEnvironment hostingEnvironment)
+          IHostingEnvironment hostingEnvironment,
+          ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,6 +52,7 @@ namespace BitSoccerWeb.Controllers
             _logger = logger;
             _urlEncoder = urlEncoder;
             _hostingEnvironment = hostingEnvironment;
+            _context = context;
         }
 
         [TempData]
@@ -62,6 +70,7 @@ namespace BitSoccerWeb.Controllers
             var model = new IndexViewModel
             {
                 Username = user.UserName,
+                DisplayName = user.DisplayName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
@@ -86,6 +95,11 @@ namespace BitSoccerWeb.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if (model.DisplayName != user.DisplayName)
+            {
+                user.DisplayName = model.DisplayName;
+            }
+
             var email = user.Email;
             if (model.Email != email)
             {
@@ -105,29 +119,68 @@ namespace BitSoccerWeb.Controllers
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
             }
+            await _userManager.UpdateAsync(user);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost("Manage")]
-        public async Task<IActionResult> UploadFile(IEnumerable<IFormFile> files)
+        public async Task<IActionResult> UploadFile(IFormFile file, string teamName)
         {
-            long size = files.Sum(f => f.Length);
-
-            foreach (var formFile in files)
+            var team = new Team
             {
-                if (!formFile.FileName.EndsWith(".dll"))
-                    continue;
+                TeamName = teamName,
+                FilePath = file.FileName,
+                UserId = _userManager.GetUserId(User)
+            };
+            await _context.Teams.AddAsync(team);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Team");
+        }
 
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Teams", Guid.NewGuid() + ".dll");
-                if (formFile.Length > 0)
+        public async Task<IActionResult> EditTeam(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.Id == id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+            return View(team);
+        }
+
+        [HttpPost, ActionName("EditTeam")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTeam(int id, [Bind("Id,FilePath,TeamName,UserId")] Team team)
+        //public async Task<IActionResult> EditTeam(int id, [Bind(Include="Id,FilePath,TeamName,UserId")] Team team)
+        {
+            if (id != team.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(team);
+            }
+
+            try
+            {
+                _context.Update(team);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TeamExists(team.Id))
                 {
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
+                    return NotFound();
                 }
+                throw;
             }
             return RedirectToAction("Team");
         }
@@ -150,6 +203,11 @@ namespace BitSoccerWeb.Controllers
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+        }
+
+        private bool TeamExists(int id)
+        {
+            return _context.Teams.Any(team => team.Id == id);
         }
 
         #endregion
