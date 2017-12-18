@@ -1,20 +1,29 @@
-﻿@{
+﻿@using BitSoccerWeb.Data
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Linq
+@using Microsoft.CodeAnalysis
+@inject ApplicationDbContext ApplicationDbContext
+@inject UserManager<ApplicationUser> UserManager
+@model BitSoccerWeb.Models.HomeViewModels.DropDownViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="container container-top">
     <div class="row">
-                <div id="game-div" class="game-div"></div>       
+        <div id="game-div" class="game-div"></div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
-                <h1 class="center">
-                    <span id="teamOneName">
-                        Team1
-                    </span>
-                </h1>
+                <select name="TeamOneIndex">
+                    @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                    {
+                        <option value="@team.Id">@team.TeamName</option>
+                    }
+                </select>
             </form>
+            <span id="teamOneName"></span>
         </div>
         <div class="col-md-4">
             <h1 class="center">
@@ -23,12 +32,14 @@
         </div>
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
-                <h1 class="center">
-                    <span id="teamTwoName">
-                        Team2
-                    </span>
-                </h1>
+                <select name="TeamTwoIndex" style="z-index: 245524">
+                    @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                    {
+                        <option value="@team.Id">@team.TeamName</option>
+                    }
+                </select>
             </form>
+            <span id="teamTwoName"></span>
         </div>
     </div>
 </div>
