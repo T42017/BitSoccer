@@ -21,13 +21,7 @@ using System.Xml.XPath;
 namespace BitSoccerWeb.Controllers
 {
     public class HomeController : Controller
-    {
-        private readonly DropDownViewModel _dropDownViewModel = new DropDownViewModel();
-        public HomeController()
-        {
-            
-        }
-            
+    {       
 
         public IActionResult Index()
         {

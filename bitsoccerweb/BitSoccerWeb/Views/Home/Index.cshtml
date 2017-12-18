@@ -4,19 +4,19 @@
 @using Microsoft.CodeAnalysis
 @inject ApplicationDbContext ApplicationDbContext
 @inject UserManager<ApplicationUser> UserManager
-@model BitSoccerWeb.Models.HomeViewModels.DropDownViewModel
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="container container-top">
     <div class="row">
-                <div id="game-div" class="game-div"></div>       
+        <div id="game-div" class="game-div"></div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
-                <select name="TeamOneIndex">
+                <select name="TeamOneIndex" class="form-control">
                     @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
                     {
                         <option value="@team.Id">@team.TeamName</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-4">
             <form asp-controller="Home" asp-action="Index" method="post">
-                <select name="TeamTwoIndex" style="z-index: 245524">
+                <select name="TeamTwoIndex" class="form-control">
                     @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
                     {
                         <option value="@team.Id">@team.TeamName</option>
