@@ -139,7 +139,7 @@ namespace BitSoccerWeb.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Team");
         }
-
+        
         public async Task<IActionResult> EditTeam(int? id)
         {
             if (id == null)

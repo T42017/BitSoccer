@@ -3,8 +3,8 @@ var sketch = function(p) {
     // -------- members ------------------
     let canvas, xml;
     let currentGameState = 0;
-    const fps = 1000 / 60;
-    const playbackBufferHeight = 5;
+    const fps = 60;
+    let playbackBufferHeight = 5;
     let backgroundImage;
     
     const teamOne = {
@@ -16,12 +16,11 @@ var sketch = function(p) {
         score: 0
     };
     let ball;
-
     // -----------------------------------
 
 
     // ----- p5 functions -------
-    p.setup = function() {
+    p.setup = () => {
         canvas = p.createCanvas(1920, 1080);
         backgroundImage = p.loadImage("js/SoccerFieldPs.png");
         //canvas.class("col-md-8 col-md-offset-2");
@@ -46,6 +45,12 @@ var sketch = function(p) {
             teamOne.score = xml.gameStates[currentGameState].getAttribute("Team1Scores");
             teamTwo.score = xml.gameStates[currentGameState].getAttribute("Team2Scores");
         }
+
+        if (p.mouseY > (p.height - 5)) {
+            playbackBufferHeight = 20;
+        } else {
+            playbackBufferHeight = 5;
+        }
     };
 
     p.draw = () => {
@@ -66,15 +71,17 @@ var sketch = function(p) {
             p.mouseY > p.height ||
             p.mouseX < 0 ||
             p.mouseX > p.width) {
-            return;
+            return false;
         }
 
         const x = p.map(p.mouseX, 0, p.width, 0, xml.gameStates.length);
         currentGameState = p.floor(x);
+
+        return false;
     };
 
-    p.mouseDragged = function() {
-        p.mousePressed();
+    p.mouseDragged = () => {
+        return p.mousePressed();
     };
 
     // ---------------------------
@@ -83,7 +90,8 @@ var sketch = function(p) {
 
     // ----------- initialization functions -------------------
     p.initializeGame = (teamOneName, teamTwoName) => {
-        xml = p.getXML(`js/preview-${teamOneName}-${teamTwoName}.xml`);
+        //xml = p.getXML(`js/preview-${teamOneName}-${teamTwoName}.xml`);
+        xml = p.getXML("js/171215103937-TeamScania-TeamOskar.xml");
         p.initializePlayers();
         p.initializeBall();
         document.getElementById("teamOneName").innerHTML = xml.teamNames.getAttribute("Team1Name");
@@ -117,31 +125,14 @@ var sketch = function(p) {
         ball = new Ball();
     };
     // ------------------------------
-
-
-
-    // ----------- constructor functions ---------------
-    // Represents a player with a position, tag (what position to search for in the XML) and a team for drawing the correct colour.
-    //function Player(tag, team) {
-    //    this.pos = p.createVector(0, 0);
-    //    this.tag = tag;
-    //    this.team = team;
-    //    this.width = 10;
-    //    this.height = 10;
-    //}
-
-    // Represents a ball with a position.
-    //function Ball() {
-    //    this.pos = p.createVector(0, 0);
-    //}
-    // ----------------------------------------------------
+    
     class Player {
         constructor(tag, team) {
             this.pos = p.createVector(0, 0);
             this.tag = tag;
             this.team = team;
-            this.width = 10;
-            this.height = 10;
+            this.width = 25;
+            this.height = 25;
         }
 
         move() {
@@ -177,65 +168,9 @@ var sketch = function(p) {
         draw() {
             p.stroke(0);
             p.fill(255);
-            p.ellipse(this.pos.x, this.pos.y, 10, 10);
+            p.ellipse(this.pos.x, this.pos.y, 20, 20);
         }
     }
-
-
-
-    // ------------- prototype attachments ----------------------
-    //Player.prototype.move = function() {
-    //    p.move(this, this.tag);
-    //};
-
-    //Player.prototype.draw = function() {
-    //    p.stroke(0);
-    //    var colour = {
-    //        r: (this.team === "one") * 255,
-    //        g: 0,
-    //        b: (this.team === "two") * 255
-    //    };
-
-    //    p.fill(colour.r, colour.g, colour.b);
-    //    p.rect(this.pos.x - this.width / 2,
-    //        this.pos.y - this.height / 2,
-    //        this.width,
-    //        this.height
-    //    );
-    //};
-
-
-function add() {
-    $("#test").append(
-        "<div  id='newSelect' class='form-group'>" +
-            "<label class='col-md-4 control-label' for='SelectTeam'>Select Team</label>" +
-                "<div class='col-md-4'>" +
-                    "<select id='SelectTeamTwo' name='TeamTwo' class='form-control'>" + 
-                        "<option value='1'>Team1</option>" +
-                        "<option value='2'>Team2</option>" +
-                        "<option value='3'>Team3</option>" +
-                    "</select>" + 
-        "</div>" + "<a href='#' class='btn btn-xs' onclick='remove()'style='padding-top:1vh;'><span class='glyphicon glyphicon-remove'></span></a>" +
-        "</div>");
-
-}
-
-function remove() {
-    $("#newSelect").remove();
-}
-
-    //Ball.prototype.move = function() {
-    //    p.move(this, "BallPosition");
-    //};
-
-    //Ball.prototype.draw = function() {
-    //    p.stroke(0);
-    //    p.fill(255);
-    //    p.ellipse(this.pos.x, this.pos.y, 10, 10);
-    //};
-    // --------------------------------------------------
-
-
 
     // ------------- helper functions ---------------
     p.move = (obj, tag) => {
@@ -249,13 +184,7 @@ function remove() {
         const pos = {
             x: parseInt(playerTag.getAttribute("X")),
             y: parseInt(playerTag.getAttribute("Y"))
-            //x: parseInt(playerPosXML[0].getAttribute("X")),
-            //y: parseInt(playerPosXML[0].getAttribute("Y"))
         };
-        //obj.pos = p.createVector(
-        //    p.map(pos.x, 0, 1920, 0, p.width),
-        //    p.map(pos.y, 0, 1080, 0, p.height)
-        //);
         obj.pos = p.createVector(pos.x, pos.y);
     };
 
@@ -272,3 +201,22 @@ function remove() {
 
 // Append the sketch to the DOM-element with id "game-div"
 new p5(sketch, "game-div");
+
+function add() {
+    $("#test").append(
+        "<div  id='newSelect' class='form-group'>" +
+        "<label class='col-md-4 control-label' for='SelectTeam'>Select Team</label>" +
+        "<div class='col-md-4'>" +
+        "<select id='SelectTeamTwo' name='TeamTwo' class='form-control'>" +
+        "<option value='1'>Team1</option>" +
+        "<option value='2'>Team2</option>" +
+        "<option value='3'>Team3</option>" +
+        "</select>" +
+        "</div>" + "<a href='#' class='btn btn-xs' onclick='remove()'style='padding-top:1vh;'><span class='glyphicon glyphicon-remove'></span></a>" +
+        "</div>");
+
+}
+
+function remove() {
+    $("#newSelect").remove();
+}

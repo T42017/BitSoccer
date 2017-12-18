@@ -4,7 +4,7 @@
 @using BitSoccerWeb.Views.Manage
 @using Microsoft.AspNetCore.Mvc.Rendering
 
-@inject ApplicationDbContext Context
+@inject ApplicationDbContext ApplicationDbContext
 @inject UserManager<ApplicationUser> UserManager
 
 @{
@@ -54,7 +54,7 @@
             </h4>
 
             <table class="table" style="table-layout: fixed;">
-                @foreach (var team in Context.Teams.Where(team => team.UserId == UserManager.GetUserId(User) @*|| team.UserId == null*@))
+                @foreach (var team in ApplicationDbContext.Teams.Where(team => team.UserId == UserManager.GetUserId(User) @*|| team.UserId == null*@))
                 {
                     <tr>
                         <td style="word-wrap: break-word;">@team.TeamName</td>

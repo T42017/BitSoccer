@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Common;
 using GameEngine;
 
@@ -33,6 +34,11 @@ namespace BitSoccerWeb.Temp
             {
                 gameStep++;
                 match.GameStates.Add(SerializableGameState.FromGameState(gameEngine.GetNext()));
+                match.GameStates.Add(SerializableGameState.FromGameState(gameEngine.GetNext()));
+                match.GameStates.Add(SerializableGameState.FromGameState(gameEngine.GetNext()));
+                match.GameStates.Add(SerializableGameState.FromGameState(gameEngine.GetNext()));
+                match.GameStates.Add(SerializableGameState.FromGameState(gameEngine.GetNext()));
+                //Thread.Sleep(500);
             }
 
             ObjectXmlSerializer<Match>.Save(match, savePath);

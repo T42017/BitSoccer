@@ -32,13 +32,6 @@ namespace BitSoccerWeb.Controllers
             return View(/*model*/);
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
         public IActionResult Simulate()
         {
             ViewData["Message"] = "Simulations";
