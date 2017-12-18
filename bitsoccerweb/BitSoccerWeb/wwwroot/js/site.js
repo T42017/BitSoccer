@@ -1,4 +1,24 @@
-﻿// The p5 sketch.
+﻿function add() {
+    $("#test").append(
+        "<div  id='newSelect' class='form-group'>" +
+        "<label class='col-md-4 control-label' for='SelectTeam'>Select Team</label>" +
+        "<div class='col-md-4'>" +
+        "<select id='SelectTeamTwo' name='TeamTwo' class='form-control'>" +
+        "<option value='1'>Team1</option>" +
+        "<option value='2'>Team2</option>" +
+        "<option value='3'>Team3</option>" +
+        "</select>" +
+        "</div>" + "<a href='#' class='btn btn-xs' onclick='remove()'style='padding-top:1vh;'><span class='glyphicon glyphicon-remove'></span></a>" +
+        "</div>");
+
+}
+
+function remove() {
+    $("#newSelect").remove();
+}
+
+
+// The p5 sketch.
 var sketch = function(p) {
     // -------- members ------------------
     let canvas, xml;
@@ -90,7 +110,7 @@ var sketch = function(p) {
 
     // ----------- initialization functions -------------------
     p.initializeGame = (teamOneName, teamTwoName) => {
-        //xml = p.getXML(`js/preview-${teamOneName}-${teamTwoName}.xml`);
+        xml = p.getXML("js/171130083835-TeamMeh-TeamScania.xml");
         xml = p.getXML("js/171215103937-TeamScania-TeamOskar.xml");
         p.initializePlayers();
         p.initializeBall();

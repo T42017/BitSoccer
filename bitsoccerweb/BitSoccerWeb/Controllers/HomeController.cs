@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,8 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using BitSoccerWeb.Data;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace BitSoccerWeb.Controllers
@@ -41,43 +44,57 @@ namespace BitSoccerWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult TwoTeamSim()
+        public IActionResult TwoTeamSim(int nrOfMatches, int TeamOne, int TeamTwo)
         {
 
-            var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            var teamOnePath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamScania.dll";
-            var teamOne = Path.Combine(projectFolder + teamOnePath);
+            List<(string, string, int)> info = new List<ValueTuple<string, string, int>>();
 
-            var teamTwoPath = @"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar.dll";
-            var teamTwo = Path.Combine(projectFolder + teamTwoPath);
-
-            var teamOneName = teamOnePath.Split(@"Teams\");
-            var teamTwoName = teamTwoPath.Split(@"Teams\");
-
-            var t1Name = teamOneName[1].Split(".dll");
-            var t2Name = teamTwoName[1].Split(".dll");
-
-            var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{DateTime.Now.ToString("yyMMddhhmmss")}-{t1Name[0]}-{t2Name[0]}.xml";
-
-            var matches = Path.Combine(projectFolder + matchPath);
+            for (int i = 1; i < nrOfMatches+1; i++)
+            {
+                string t1;
+                string t2;
+                using (var context = new ApplicationDbContext(null))
+                {
+                    var team1NameFromDb = context.Teams.First(t => t.Id == TeamOne);
+                    var team2NameFromDb = context.Teams.First(t => t.Id == TeamTwo);
+                    t1 = team1NameFromDb.FilePath;
+                    t2 = team2NameFromDb.FilePath;
+                }
 
 
-            MatchManager.PlayMatch(teamOne, teamTwo, matches);
+                var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                var teamOnePath = $@"\bitsoccerweb\BitSoccerWeb\Teams\{t1}";
+                var teamOneFullPath = Path.Combine(projectFolder + teamOnePath);
 
+                var teamTwoPath = $@"\bitsoccerweb\BitSoccerWeb\Teams\{t2}";
+                var teamTwo = Path.Combine(projectFolder + teamTwoPath);
 
+                var firstSplit = teamOnePath.Split(@"Teams\");
+                var secondSplit = teamTwoPath.Split(@"Teams\");
 
+                var lastSplitTeamOne = firstSplit[1].Split(".dll");
+                var lastSplitTeamTwo = secondSplit[1].Split(".dll");
 
-            var document = XDocument.Load(matches);
-            var resultFromXml = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value + " - " +
-                                document.XPathSelectElements("//SerializableGameState").Last().LastAttribute.Value;
+                var matchPath = $@"\bitsoccerweb\BitSoccerWeb\Matches\{Guid.NewGuid()}.xml";
 
+                var matches = Path.Combine(projectFolder + matchPath);
+                
 
+                MatchManager.PlayMatch(teamOneFullPath, teamTwo, matches);
+                var document = XDocument.Load(matches);
+                var teamOneScore = document.XPathSelectElements("//SerializableGameState").Last().FirstAttribute.Value;
+                var teamTwoScore = document.XPathSelectElements("//SerializableGameState").Last().LastAttribute.Value;
+                var matchSeed = document.XPathSelectElements("//Match").First().FirstAttribute.NextAttribute.NextAttribute.Value;
+                var teams = lastSplitTeamOne[0] + " " + " - " + " " + lastSplitTeamTwo[0];
+                var result = teamOneScore + " - " + teamTwoScore;
+                info.Add((result, matchSeed, i));
 
-
-            string result = resultFromXml;
+                ViewBag.List = info;
+                ViewBag.Teams = teams;
+                
+            }
             
-            ViewBag.Result = result;
-
+            ViewBag.NrOfMatches = nrOfMatches;
             return View("../Home/Simulate");
         }
 

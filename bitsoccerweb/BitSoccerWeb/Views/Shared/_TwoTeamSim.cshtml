@@ -1,74 +1,104 @@
-﻿@using System.Runtime.InteropServices.ComTypes
+﻿@using System.Linq
+@using System.Runtime.InteropServices.ComTypes
+@using BitSoccerWeb.Data
 @using BitSoccerWeb.Temp
+@inject ApplicationDbContext Context
+@inject UserManager<ApplicationUser> UserManager
 <section>
         <div class="form-horizontal">
             <fieldset>
                 <!-- Form Name -->
                 <legend>Two Teams</legend>
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <!-- Select Basic -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="SelectTeamOne">Select Team One</label>
-                            <div class="col-md-4">
-                                <select id="SelectTeamOne" name="TeamOne" class="form-control">
-                                    <option value="1">Team1</option>
-                                    <option value="2">Team2</option>
-                                    <option value="3">Team3</option>
-                                </select>
+                <form asp-controller="Home" asp-action="TwoTeamSim" method="post">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="SelectTeamOne">Select Team One</label>
+                                <div class="col-md-4">
+                                    <select id="SelectTeamOne" name="TeamOne" class="form-control">
+                                        @foreach (var team in Context.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                                        {
+                                            <option value="@team.Id">@team.TeamName</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Select Basic -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="SelectTeamTwo">Select Team Two</label>
-                            <div class="col-md-4">
-                                <select id="SelectTeamTwo" name="TeamTwo" class="form-control">
-                                    <option value="1">Team1</option>
-                                    <option value="2">Team2</option>
-                                    <option value="3">Team3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="NrOfMatches">Number of Matches</label>
-                            <div class="col-md-4">
-                                <input id="NrOfMatches" name="NrOfMatches" type="text" placeholder="" class="form-control">
-                            </div>
-                        </div>
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="SelectTeamTwo">Select Team Two</label>
+                                <div class="col-md-4">
+                                    <select id="SelectTeamTwo" name="TeamTwo" class="form-control">
+                                        @foreach (var team in Context.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                                        {
+                                            <option value="@team.Id">@team.TeamName</option>
+                                        }
 
-                        <!-- Button -->
-                        <form asp-controller="Home" asp-action="TwoTeamSim" method="post">
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="NrOfMatches">Number of Matches</label>
+                                <div class="col-md-4">
+                                    <input id="NrOfMatches" name="NrOfMatches" type="number" min="0" max="20" placeholder="" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+
                             <div class="form-group">
                                 <div class="col-md-4 col-md-offset-4">
                                     <button id="submitSim" name="submitSim" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <!--Result dropdowns-->
-                    <div class="col-md-6 sim">
-                        <div class="col-md-12" >
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default" >
-                                    <div class="panel-heading" >
-                                        <h4 class="panel-title matchinfo" >
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" >
-                                                @ViewBag.Result
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapse1" class="panel-collapse collapse in" >
-                                        <div class="panel-body center">
-                                            Seed: 
+                        </div>
+                        <!--Result dropdowns-->
+                        <div class="col-md-6 sim">
+                            <div class="col-md-12">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title matchinfo">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                                    @ViewBag.Teams
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse1" class="panel-collapse collapse in">
+                                            <div class="panel-body center">
+                                                <table id="table" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Match</th>
+                                                            <th>Score</th>
+                                                            <th>Seed</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if (ViewBag.List != null)
+                                                    {
+                                                        foreach (var teamInfo in ViewBag.List)
+                                                        {
+                                                          <tr style="text-align: left">
+                                                              <td>@teamInfo.Item3</td>
+                                                              <td>@teamInfo.Item1</td>
+                                                              <td>@teamInfo.Item2</td>
+                                                          </tr>
+                                                        }
+                                                    }
+                                                    
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>                        
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </fieldset>
         </div>
     </section>
