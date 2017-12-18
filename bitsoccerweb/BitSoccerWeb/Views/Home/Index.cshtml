@@ -1,4 +1,9 @@
-﻿@using Microsoft.AspNetCore.Mvc.Rendering
+﻿@using BitSoccerWeb.Data
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Linq
+@using Microsoft.CodeAnalysis
+@inject ApplicationDbContext ApplicationDbContext
+@inject UserManager<ApplicationUser> UserManager
 @model BitSoccerWeb.Models.HomeViewModels.DropDownViewModel
 @{
     ViewData["Title"] = "Home Page";
@@ -10,27 +15,25 @@
     </div>
     <div class="row">
         <div class="col-md-3 col-md-offset-1">
-            <form asp-controller="Home" asp-action="Index" method="post">
-                <select asp-for="Teams" asp-items="@Model.Teams" class="h1"> 
-                    <span id="teamOneName">
-                        Team1
-                    </span>
-                </h1>
-            </form>
+            <select id="SelectTeamOne" name="TeamOne" class="form-control">
+                @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                {
+                    <option value="@team.Id">@team.TeamName</option>
+                }
+            </select>
         </div>
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-4">
             <h1 class="center">
                 [<span id="teamOneScore">0</span>-<span id="teamTwoScore">0</span>]
             </h1>
         </div>
         <div class="col-md-3 col-md-offset-1">
-            <form asp-controller="Home" asp-action="Index" method="post">
-                <select id="SelectTeamTwo" name="TeamTwo" class="h1 center">
-                    <span id="teamTwoName">
-                        Team2
-                    </span>
-                </select>
-            </form>
+            <select id="SelectTeamTwo" name="TeamTwo" class="form-control">
+                @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                {
+                    <option value="@team.Id">@team.TeamName</option>
+                }
+            </select>
         </div>
     </div>
 </div>
