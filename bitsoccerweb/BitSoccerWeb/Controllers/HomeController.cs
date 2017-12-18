@@ -34,13 +34,6 @@ namespace BitSoccerWeb.Controllers
             return View(_dropDownViewModel);
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
         public IActionResult Simulate()
         {
             ViewData["Message"] = "Simulations";
