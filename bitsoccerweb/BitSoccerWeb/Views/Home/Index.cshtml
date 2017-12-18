@@ -14,26 +14,33 @@
                 <div id="game-div" class="game-div"></div>       
     </div>
     <div class="row">
-        <div class="col-md-3 col-md-offset-1">
-            <select id="SelectTeamOne" name="TeamOne" class="form-control">
-                @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
-                {
-                    <option value="@team.Id">@team.TeamName</option>
-                }
-            </select>
+        <div class="col-md-4">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <select name="TeamOneIndex">
+                    @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                    {
+                        <option value="@team.Id">@team.TeamName</option>
+                    }
+                </select>
+            </form>
+            <span id="teamOneName"></span>
         </div>
         <div class="col-md-4">
             <h1 class="center">
                 [<span id="teamOneScore">0</span>-<span id="teamTwoScore">0</span>]
             </h1>
         </div>
-        <div class="col-md-3 col-md-offset-1">
-            <select id="SelectTeamTwo" name="TeamTwo" class="form-control">
-                @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
-                {
-                    <option value="@team.Id">@team.TeamName</option>
-                }
-            </select>
+        <div class="col-md-4">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <select name="TeamTwoIndex" style="z-index: 245524">
+                    @foreach (var team in ApplicationDbContext.Teams.Where(t => t.UserId == UserManager.GetUserId(User) || t.UserId == null))
+                    {
+                        <option value="@team.Id">@team.TeamName</option>
+                    }
+                </select>
+            </form>
+            <span id="teamTwoName"></span>
         </div>
     </div>
 </div>
+

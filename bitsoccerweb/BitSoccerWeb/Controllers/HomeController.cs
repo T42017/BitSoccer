@@ -31,7 +31,7 @@ namespace BitSoccerWeb.Controllers
 
         public IActionResult Index()
         {
-            return View(_dropDownViewModel);
+            return View();
         }
 
         public IActionResult Simulate()
