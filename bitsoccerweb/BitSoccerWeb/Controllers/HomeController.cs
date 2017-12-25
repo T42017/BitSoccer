@@ -63,22 +63,22 @@ namespace BitSoccerWeb.Controllers
 
             for (int i = 1; i < nrOfMatches+1; i++)
             {
-                string t1;
-                string t2;
-                using (var context = new ApplicationDbContext(null))
-                {
-                    var team1NameFromDb = context.Teams.First(t => t.Id == TeamOne);
-                    var team2NameFromDb = context.Teams.First(t => t.Id == TeamTwo);
-                    t1 = team1NameFromDb.FilePath;
-                    t2 = team2NameFromDb.FilePath;
-                }
+                //string t1;
+                //string t2;
+                //using (var context = new ApplicationDbContext(null))
+                //{
+                //    var team1NameFromDb = context.Teams.First(t => t.Id == TeamOne);
+                //    var team2NameFromDb = context.Teams.First(t => t.Id == TeamTwo);
+                //    t1 = team1NameFromDb.FilePath;
+                //    t2 = team2NameFromDb.FilePath;
+                //}
 
 
                 var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                var teamOnePath = $@"\bitsoccerweb\BitSoccerWeb\Teams\{t1}";
+                var teamOnePath = $@"\bitsoccerweb\BitSoccerWeb\Teams\TeamOskar";
                 var teamOneFullPath = Path.Combine(projectFolder + teamOnePath);
 
-                var teamTwoPath = $@"\bitsoccerweb\BitSoccerWeb\Teams\{t2}";
+                var teamTwoPath = $@"\bitsoccerweb\BitSoccerWeb\Teams\TeamOne";
                 var teamTwo = Path.Combine(projectFolder + teamTwoPath);
 
                 var firstSplit = teamOnePath.Split(@"Teams\");
